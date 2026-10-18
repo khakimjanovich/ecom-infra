@@ -25,11 +25,5 @@ services:
       interval: 5s
       retries: 10
 
-  mailpit:
-    image: axllent/mailpit:v1.31.5
-    ports:
-      - "1025:1025" # SMTP
-      - "8025:8025" # web inbox and API
-
 volumes:
   postgres-data:
