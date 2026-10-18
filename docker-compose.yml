@@ -25,14 +25,6 @@ services:
       interval: 5s
       retries: 10
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:26.4.0
-    command: start-dev
-    environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: admin
-      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-local-only}
-    ports: ["8180:8080"]
-
   mailpit:
     image: axllent/mailpit:v1.31.5
     ports:
