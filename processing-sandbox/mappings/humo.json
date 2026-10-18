@@ -1,0 +1,276 @@
+{
+  "mappings": [
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "<billerRef>SOAP_DMS</billerRef>"
+          },
+          {
+            "contains": "<name>pan</name><value>9860090101190002</value>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=9 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code_final</name><value>116</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details><action>-1</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "<billerRef>SOAP_DMS</billerRef>"
+          },
+          {
+            "contains": "<name>pan</name><value>9860090101190003</value>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=9 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code_final</name><value>101</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details><action>-1</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "<billerRef>SOAP_DMS</billerRef>"
+          },
+          {
+            "contains": "<name>pan</name><value>9860090101190009</value>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=9 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details><action>4</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ],
+        "fixedDelayMilliseconds": 40000
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "<billerRef>SOAP_DMS</billerRef>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=9 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details><action>4</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 2,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "<ns:Payment>"
+          },
+          {
+            "contains": "<confirmed>true</confirmed>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{xPath request.body '//paymentID/text()'}}</paymentID><details><item><name>auth_action_code_final</name><value>000</value></item></details><action>10</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "<ns:CancelRequest>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:CancelRequestResponse><paymentID>{{xPath request.body '//paymentID/text()'}}</paymentID><action>9</action></ns:CancelRequestResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "<ns:GetPayment>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:GetPaymentResponse><paymentID>{{randomValue length=9 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><status>finished</status><details><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details></ns:GetPaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo-middleware/v1/send/sms"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": {
+            "sent": true
+          }
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo-middleware/v1/send/code",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$.params[?(@.code == '660130')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": {
+            "token": "humotok-{{jsonPath request.body '$.params.pan'}}"
+          }
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo-middleware/v1/send/code"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "{{jsonPath request.body '$.id'}}",
+          "error": {
+            "code": 100,
+            "message": "Wrong code"
+          }
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "GET",
+        "urlPath": "/humo-middleware/v2/pm/bins"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "id": "bins",
+          "result": [
+            {
+              "bin": "986009",
+              "bank_c": "09"
+            },
+            {
+              "bin": "986001",
+              "bank_c": "01"
+            },
+            {
+              "bin": "986012",
+              "bank_c": "12"
+            }
+          ]
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    }
+  ]
+}

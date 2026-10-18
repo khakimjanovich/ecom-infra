@@ -1,0 +1,346 @@
+{
+  "mappings": [
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.new.otp')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "jsonrpc": "2.0",
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": {
+            "id": "{{jsonPath request.body '$.params.card.pan'}}",
+            "phoneMask": "+998 90 *** ** 01"
+          }
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.new.verify')]"
+          },
+          {
+            "matchesJsonPath": "$.params.otp[?(@.code == '111111')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "jsonrpc": "2.0",
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": {
+            "token": "uztok-{{jsonPath request.body '$.params.otp.id'}}",
+            "status": "ACTIVE"
+          }
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.new.verify')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "jsonrpc": "2.0",
+          "id": "{{jsonPath request.body '$.id'}}",
+          "error": {
+            "code": -231,
+            "message": "Invalid OTP code"
+          }
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.pay.purpose')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000002')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "jsonrpc": "2.0",
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": {
+            "id": "{{randomValue length=10 type='NUMERIC'}}",
+            "refNum": "{{randomValue length=12 type='NUMERIC'}}",
+            "ext": "{{jsonPath request.body '$.params.tran.ext'}}",
+            "amount": "{{jsonPath request.body '$.params.tran.amount'}}",
+            "resp": 51,
+            "respSV": "51",
+            "respText": "Insufficient funds",
+            "status": "ROK"
+          }
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.pay.purpose')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000003')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "jsonrpc": "2.0",
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": {
+            "id": "{{randomValue length=10 type='NUMERIC'}}",
+            "refNum": "{{randomValue length=12 type='NUMERIC'}}",
+            "ext": "{{jsonPath request.body '$.params.tran.ext'}}",
+            "amount": "{{jsonPath request.body '$.params.tran.amount'}}",
+            "resp": 54,
+            "respSV": "54",
+            "respText": "Expired card",
+            "status": "ROK"
+          }
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.pay.purpose')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000009')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "jsonrpc": "2.0",
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": {
+            "id": "0"
+          }
+        },
+        "transformers": [
+          "response-template"
+        ],
+        "fixedDelayMilliseconds": 40000
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.pay.purpose')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "jsonrpc": "2.0",
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": {
+            "id": "{{randomValue length=10 type='NUMERIC'}}",
+            "refNum": "{{randomValue length=12 type='NUMERIC'}}",
+            "ext": "{{jsonPath request.body '$.params.tran.ext'}}",
+            "amount": "{{jsonPath request.body '$.params.tran.amount'}}",
+            "resp": 0,
+            "respSV": "00",
+            "respText": "Approved",
+            "status": "OK"
+          }
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.reverse')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "jsonrpc": "2.0",
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": {
+            "id": "{{jsonPath request.body '$.params.tranId'}}",
+            "resp": 0,
+            "respSV": "00",
+            "status": "OK"
+          }
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.ext')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "jsonrpc": "2.0",
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": [
+            {
+              "id": "{{randomValue length=10 type='NUMERIC'}}",
+              "refNum": "{{randomValue length=12 type='NUMERIC'}}",
+              "ext": "{{jsonPath request.body '$.params.extId'}}",
+              "resp": 0,
+              "respSV": "00",
+              "status": "OK"
+            }
+          ]
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'get.bin.list')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "jsonrpc": "2.0",
+          "id": "{{jsonPath request.body '$.id'}}",
+          "result": [
+            {
+              "bin": "860002",
+              "instId": "0002"
+            },
+            {
+              "bin": "860014",
+              "instId": "0014"
+            },
+            {
+              "bin": "860049",
+              "instId": "0049"
+            },
+            {
+              "bin": "860031",
+              "instId": "0031"
+            }
+          ]
+        },
+        "transformers": [
+          "response-template"
+        ]
+      }
+    }
+  ]
+}
