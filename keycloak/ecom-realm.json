@@ -1,0 +1,107 @@
+{
+  "realm": "ecom",
+  "enabled": true,
+  "accessTokenLifespan": 300,
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Bank staff"
+      },
+      {
+        "name": "partner",
+        "description": "A merchant with a verified email"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "ecom-backend",
+      "name": "ecom backend",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "local-only",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false
+    },
+    {
+      "clientId": "ecom-portal",
+      "name": "Merchant and admin portal",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "http://localhost:3000/*"
+      ],
+      "webOrigins": [
+        "+"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "aziz",
+      "enabled": true,
+      "email": "aziz@heeypay.uz",
+      "emailVerified": true,
+      "firstName": "Aziz",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "local-only",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "admin"
+      ]
+    },
+    {
+      "username": "malika",
+      "enabled": true,
+      "email": "malika@heeypay.uz",
+      "emailVerified": true,
+      "firstName": "Malika",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "local-only",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "admin"
+      ]
+    },
+    {
+      "username": "service-account-ecom-backend",
+      "enabled": true,
+      "serviceAccountClientId": "ecom-backend",
+      "clientRoles": {
+        "realm-management": [
+          "manage-users",
+          "view-users",
+          "query-users",
+          "manage-clients",
+          "view-clients",
+          "view-realm"
+        ]
+      }
+    }
+  ],
+  "components": {
+    "org.keycloak.userprofile.UserProfileProvider": [
+      {
+        "providerId": "declarative-user-profile",
+        "subComponents": {},
+        "config": {
+          "kc.user.profile.config": [
+            "{\"attributes\": [{\"name\": \"username\", \"validations\": {\"length\": {\"min\": 3, \"max\": 255}, \"username-prohibited-characters\": {}, \"up-username-not-idn-homograph\": {}}, \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}, \"multivalued\": false}, {\"name\": \"email\", \"validations\": {\"email\": {}, \"length\": {\"max\": 255}}, \"required\": {\"roles\": [\"user\"]}, \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}, \"multivalued\": false}, {\"name\": \"firstName\", \"validations\": {\"length\": {\"max\": 255}}, \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}, \"multivalued\": false}, {\"name\": \"lastName\", \"validations\": {\"length\": {\"max\": 255}}, \"permissions\": {\"view\": [\"admin\", \"user\"], \"edit\": [\"admin\", \"user\"]}, \"multivalued\": false}]}"
+          ]
+        }
+      }
+    ]
+  }
+}
