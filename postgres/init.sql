@@ -10,3 +10,6 @@ BEGIN
   END LOOP;
 END $$;
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
+-- The commission module keeps fee rules from overlapping with an exclusion constraint on uuid, text
+-- and time ranges together, which needs btree_gist. Extensions need a superuser, so it is added here.
+CREATE EXTENSION IF NOT EXISTS btree_gist SCHEMA commission;
