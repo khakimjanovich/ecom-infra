@@ -1,5 +1,5 @@
-# Local environment for acquiring-backend. Tools join only when an episode needs them.
-name: acquiring
+# Local environment for ecom.
+name: ecom
 
 services:
   postgres:

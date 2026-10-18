@@ -1,4 +1,4 @@
--- One database, one schema per module, one user per module (episode 02).
+-- One database, one schema per module, one user per module.
 -- Each user owns only its own schema, so it cannot read or write another module's tables.
 DO $$
 DECLARE m text;
