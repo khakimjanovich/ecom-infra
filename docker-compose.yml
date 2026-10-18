@@ -33,5 +33,11 @@ services:
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-local-only}
     ports: ["8180:8080"]
 
+  mailpit:
+    image: axllent/mailpit:v1.31.5
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # web inbox and API
+
 volumes:
   postgres-data:
