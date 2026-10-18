@@ -100,7 +100,7 @@
             "matchesJsonPath": "$[?(@.method == 'trans.pay.purpose')]"
           },
           {
-            "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000002')]"
+            "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000082')]"
           }
         ]
       },
@@ -138,7 +138,7 @@
             "matchesJsonPath": "$[?(@.method == 'trans.pay.purpose')]"
           },
           {
-            "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000003')]"
+            "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000033')]"
           }
         ]
       },
