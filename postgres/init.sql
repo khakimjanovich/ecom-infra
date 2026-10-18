@@ -1,8 +1,12 @@
--- One database, one schema per module (episode 02).
--- The app connects as acquiring_app, which owns the module schemas.
-CREATE USER acquiring_app WITH PASSWORD 'local-only';
-CREATE SCHEMA partner AUTHORIZATION acquiring_app;
-CREATE SCHEMA commission AUTHORIZATION acquiring_app;
-CREATE SCHEMA terminal AUTHORIZATION acquiring_app;
-CREATE SCHEMA card AUTHORIZATION acquiring_app;
-CREATE SCHEMA payment AUTHORIZATION acquiring_app;
+-- One database, one schema per module, one user per module (episode 02).
+-- Each user owns only its own schema, so it cannot read or write another module's tables.
+DO $$
+DECLARE m text;
+BEGIN
+  FOREACH m IN ARRAY ARRAY['partner', 'commission', 'terminal', 'card', 'payment'] LOOP
+    EXECUTE format('CREATE USER %I WITH PASSWORD %L', m || '_user', 'local-only');
+    EXECUTE format('CREATE SCHEMA %I AUTHORIZATION %I', m, m || '_user');
+    EXECUTE format('ALTER ROLE %I SET search_path = %I', m || '_user', m);
+  END LOOP;
+END $$;
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
