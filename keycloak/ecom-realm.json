@@ -33,11 +33,15 @@
       "standardFlowEnabled": true,
       "directAccessGrantsEnabled": true,
       "redirectUris": [
-        "http://localhost:3000/*"
+        "http://localhost:5180/*"
       ],
       "webOrigins": [
-        "+"
-      ]
+        "http://localhost:5180"
+      ],
+      "attributes": {
+        "post.logout.redirect.uris": "http://localhost:5180/*",
+        "pkce.code.challenge.method": "S256"
+      }
     }
   ],
   "users": [
@@ -103,5 +107,13 @@
         }
       }
     ]
-  }
+  },
+  "internationalizationEnabled": true,
+  "supportedLocales": [
+    "en",
+    "ru",
+    "uz"
+  ],
+  "defaultLocale": "en",
+  "loginTheme": "ecom"
 }
