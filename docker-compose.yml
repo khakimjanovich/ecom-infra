@@ -4,6 +4,8 @@ name: ecom
 services:
   postgres:
     image: postgres:17.6-alpine
+    # Each app instance opens a pool per module; several instances run side by side locally.
+    command: ["postgres", "-c", "max_connections=300"]
     environment:
       POSTGRES_DB: acquiring
       POSTGRES_USER: acquiring_admin

@@ -1,0 +1,76 @@
+# The system under load, sized like its target server: 1 CPU, 2 GB RAM (and a 256 GB SSD, which
+# Docker can't limit per container; it is the host's disk). Each deployable runs its Gradle-built jar
+# on the plain JRE image, untouched; the limits and JVM options live here, not in the code. It joins
+# the main stack's network and uses its Postgres, Redis, Keycloak, Vault, Mailpit, file store and
+# processing sandbox.
+#
+#   (in ecom) ./gradlew :app:bootJar
+#             ./gradlew -p adapters/uzcard-adapter bootJar
+#             ./gradlew -p adapters/humo-adapter bootJar
+#             ./gradlew -p services/file-service bootJar
+#   docker compose up -d                               # the main stack first
+#   docker compose -f load/docker-compose.yml up -d    # then this: the app on http://localhost:8085
+name: ecom-load
+
+x-server: &server
+  image: eclipse-temurin:25-jre
+  user: "10001"
+  deploy:
+    resources:
+      limits: { cpus: "1", memory: 2G }
+  environment: &jvm
+    # The heap follows the container's memory limit.
+    JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=75
+
+services:
+  app:
+    <<: *server
+    command: ["java", "-jar", "/opt/ecom/app.jar"]
+    volumes: ["${ECOM_DIR:-../../ecom}/app/build/libs/app.jar:/opt/ecom/app.jar:ro"]
+    ports: ["8085:8080"]
+    environment:
+      <<: *jvm
+      DB_URL: jdbc:postgresql://postgres:5432/acquiring
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      MAIL_HOST: mailpit
+      MAIL_PORT: "1025"
+      KEYCLOAK_URL: http://keycloak:8080
+      # Tokens name localhost:8180 as their issuer (KC_HOSTNAME); keys are fetched inside the network.
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://localhost:8180/realms/ecom
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/ecom/protocol/openid-connect/certs
+      VAULT_URL: http://vault:8200
+      UZCARD_ADAPTER_URL: http://uzcard-adapter:8091
+      HUMO_ADAPTER_URL: http://humo-adapter:8092
+      FILE_SERVICE_URL: http://file-service:8093
+    depends_on: [uzcard-adapter, humo-adapter, file-service]
+
+  uzcard-adapter:
+    <<: *server
+    command: ["java", "-jar", "/opt/ecom/uzcard-adapter.jar"]
+    volumes: ["${ECOM_DIR:-../../ecom}/adapters/uzcard-adapter/build/libs/uzcard-adapter.jar:/opt/ecom/uzcard-adapter.jar:ro"]
+    environment:
+      <<: *jvm
+      SV_GATE_URL: http://processing-sandbox:8080/uzcard
+
+  humo-adapter:
+    <<: *server
+    command: ["java", "-jar", "/opt/ecom/humo-adapter.jar"]
+    volumes: ["${ECOM_DIR:-../../ecom}/adapters/humo-adapter/build/libs/humo-adapter.jar:/opt/ecom/humo-adapter.jar:ro"]
+    environment:
+      <<: *jvm
+      HUMO_PAYMENT_SERVER_URL: http://processing-sandbox:8080/humo/PaymentServer
+      HUMO_MIDDLEWARE_URL: http://processing-sandbox:8080/humo-middleware
+
+  file-service:
+    <<: *server
+    command: ["java", "-jar", "/opt/ecom/file-service.jar"]
+    volumes: ["${ECOM_DIR:-../../ecom}/services/file-service/build/libs/file-service.jar:/opt/ecom/file-service.jar:ro"]
+    environment:
+      <<: *jvm
+      S3_ENDPOINT: http://file-store:8333
+
+networks:
+  default:
+    name: ecom_default
+    external: true
