@@ -313,6 +313,45 @@
       ]
     },
     {
+      "id": 9,
+      "type": "timeseries",
+      "title": "Unknown debits resolved, by how they ended",
+      "description": "A workflow asks the scheme again until it says approved or declined; manual_review when it never does",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 24,
+        "w": 24,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (outcome) (increase(ecom_payments_resolutions_total[5m]))",
+          "legendFormat": "{{outcome}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
       "id": 8,
       "type": "logs",
       "title": "Warnings and errors (each line links to its trace)",
@@ -322,7 +361,7 @@
       },
       "gridPos": {
         "x": 0,
-        "y": 24,
+        "y": 32,
         "w": 24,
         "h": 10
       },

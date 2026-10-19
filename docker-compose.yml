@@ -71,6 +71,13 @@ services:
       - ./seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
       - file-store-data:/data
 
+  # Temporal, for durable waits: resolving debits the scheme didn't answer. The dev server keeps
+  # its state in memory; the UI is on http://localhost:8233.
+  temporal:
+    image: temporalio/temporal:1.9.1
+    command: ["server", "start-dev", "--ip", "0.0.0.0", "--ui-ip", "0.0.0.0"]
+    ports: ["7233:7233", "8233:8233"]
+
   # Metrics, traces and logs in one place: an OpenTelemetry collector (OTLP on 4317/4318) feeding
   # Prometheus, Tempo and Loki, with Grafana on http://localhost:3030. Services send to it through
   # the OpenTelemetry Java agent (see observability/agent.env).
