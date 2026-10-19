@@ -11,6 +11,10 @@
       {
         "name": "partner",
         "description": "A merchant with a verified email"
+      },
+      {
+        "name": "merchant",
+        "description": "A merchant's server (API client): creates payments"
       }
     ]
   },
