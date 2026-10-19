@@ -119,5 +119,12 @@
     "uz"
   ],
   "defaultLocale": "en",
-  "loginTheme": "ecom"
+  "loginTheme": "ecom",
+  "resetPasswordAllowed": true,
+  "smtpServer": {
+    "host": "mailpit",
+    "port": "1025",
+    "from": "no-reply@heeypay.uz",
+    "fromDisplayName": "HeeyPay"
+  }
 }
