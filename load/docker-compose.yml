@@ -44,6 +44,9 @@ services:
       HUMO_ADAPTER_URL: http://humo-adapter:8092
       FILE_SERVICE_URL: http://file-service:8093
       TEMPORAL_TARGET: temporal:7233
+      KAFKA_BOOTSTRAP: kafka:9092
+      # Websites in the load test send webhooks to the sandbox's merchant endpoint.
+      WEBHOOK_TEST_HOSTS: processing-sandbox
     depends_on: [uzcard-adapter, humo-adapter, file-service]
 
   uzcard-adapter:

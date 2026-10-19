@@ -1,0 +1,8 @@
+{
+  "mappings": [
+    {
+      "request": { "method": "POST", "urlPath": "/merchant/webhooks" },
+      "response": { "status": 200 }
+    }
+  ]
+}
