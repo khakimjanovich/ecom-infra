@@ -45,7 +45,9 @@
       "attributes": {
         "post.logout.redirect.uris": "http://localhost:5180/*",
         "pkce.code.challenge.method": "S256"
-      }
+      },
+      "rootUrl": "http://localhost:5180",
+      "baseUrl": "/"
     }
   ],
   "users": [
