@@ -15,4 +15,5 @@ docker compose exec -e VAULT_ADDR=http://127.0.0.1:8200 -e VAULT_TOKEN=local-onl
 ```
 
 Dev mode keeps everything in memory, so keys are gone after a restart.
+SeaweedFS (http://localhost:8333, S3 API, access key `ecom` / `local-only`) stores files for the file service, the way any S3 would in production.
 Temporal, Kafka and the observability stack are added when the system needs them.

@@ -60,5 +60,15 @@ services:
     cap_add: [IPC_LOCK]
     ports: ["8200:8200"] # http://localhost:8200, token local-only; merchants' signing keys under secret/merchants
 
+  file-store:
+    image: chrislusf/seaweedfs:3.97
+    # An S3-compatible store for the file service; in production, any S3.
+    command: ["server", "-s3", "-s3.config=/etc/seaweedfs/s3.json", "-dir=/data", "-master.volumeSizeLimitMB=64", "-volume.max=8"]
+    ports: ["8333:8333"] # S3 API, access key ecom / local-only
+    volumes:
+      - ./seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
+      - file-store-data:/data
+
 volumes:
   postgres-data:
+  file-store-data:
