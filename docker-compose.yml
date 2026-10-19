@@ -71,6 +71,24 @@ services:
       - ./seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
       - file-store-data:/data
 
+  # Metrics, traces and logs in one place: an OpenTelemetry collector (OTLP on 4317/4318) feeding
+  # Prometheus, Tempo and Loki, with Grafana on http://localhost:3030. Services send to it through
+  # the OpenTelemetry Java agent (see observability/agent.env).
+  observability:
+    image: grafana/otel-lgtm:0.30.0
+    ports: ["3030:3000", "4317:4317", "4318:4318"] # 3000 is often taken on dev machines
+    volumes:
+      - ./observability/dashboards.yaml:/otel-lgtm/grafana/conf/provisioning/dashboards/ecom.yaml:ro
+      - ./observability/dashboards:/otel-lgtm/ecom-dashboards:ro
+
+  # Copies the pinned OpenTelemetry Java agent to observability/agent/, where every service's JVM
+  # picks it up with -javaagent (no code changes). Runs once and exits.
+  otel-agent:
+    image: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-java:2.30.0
+    command: ["cp", "/javaagent.jar", "/agent/opentelemetry-javaagent.jar"]
+    volumes:
+      - ./observability/agent:/agent
+
 volumes:
   postgres-data:
   file-store-data:

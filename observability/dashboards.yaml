@@ -1,0 +1,8 @@
+# The ecom dashboards, next to the ones the image brings (JVM, RED metrics).
+apiVersion: 1
+providers:
+  - name: ecom
+    folder: ecom
+    type: file
+    options:
+      path: /otel-lgtm/ecom-dashboards

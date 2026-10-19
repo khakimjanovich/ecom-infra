@@ -16,7 +16,20 @@ docker compose exec -e VAULT_ADDR=http://127.0.0.1:8200 -e VAULT_TOKEN=local-onl
 
 Dev mode keeps everything in memory, so keys are gone after a restart.
 SeaweedFS (http://localhost:8333, S3 API, access key `ecom` / `local-only`) stores files for the file service, the way any S3 would in production.
-Temporal, Kafka and the observability stack are added when the system needs them.
+Temporal and Kafka are added when the system needs them.
+
+## Observability
+
+`observability` (Grafana's otel-lgtm image) takes OpenTelemetry over OTLP (`4317` gRPC, `4318` HTTP) and keeps metrics (Prometheus), traces (Tempo) and logs (Loki), with Grafana at http://localhost:3030 and the **ecom · payments** dashboard: debits by outcome, unknown and failed debits, the scheme's answer time, request time and server errors per service, database pool waits, and warnings with links to their traces. Data lives in memory and is gone after a restart.
+
+The services are instrumented by the OpenTelemetry Java agent, not by code: `otel-agent` copies the pinned agent to `observability/agent/`, and `observability/agent.env` holds the settings. To run a service with it:
+
+```bash
+set -a; . ../ecom-infra/observability/agent.env; set +a
+OTEL_SERVICE_NAME=ecom ./gradlew :app:bootRun   # or uzcard-adapter, humo-adapter, file-service
+```
+
+The agent traces HTTP in and out, JDBC and Redis (one trace follows a payment from the app into the adapters), exports JVM, HTTP and database pool metrics plus the app's own Micrometer meters, and sends logs with their trace ids. Locally every trace is kept; production samples (`OTEL_TRACES_SAMPLER`). The load stack runs without the agent, so k6 measures the code alone.
 
 ## The system under load
 
