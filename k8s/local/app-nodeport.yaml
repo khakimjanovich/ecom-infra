@@ -1,0 +1,9 @@
+# The app on http://localhost:30085, published by the k3s container.
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-nodeport
+spec:
+  type: NodePort
+  selector: { app: ecom-app }
+  ports: [{ name: http, port: 8080, targetPort: http, nodePort: 30085 }]

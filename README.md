@@ -34,3 +34,19 @@ The agent traces HTTP in and out, JDBC and Redis (one trace follows a payment fr
 ## The system under load
 
 `load/docker-compose.yml` runs the app, the two adapters and the file service from their built jars, each limited like the target server: **1 CPU and 2 GB RAM** (the target also has a 256 GB SSD; Docker can't limit disk per container). The limits and JVM options live here, so load tests measure the code as it is. Start the main stack first, then `docker compose -f load/docker-compose.yml up -d`; the app answers on http://localhost:8085, which is where [ecom-k6-testing](https://github.com/khakimjanovich/ecom-k6-testing) points.
+
+## Kubernetes
+
+`k8s/base` runs the system on Kubernetes (Kustomize): the app with three replicas, a rolling update that starts a new pod before stopping an old one, Spring Boot's liveness and readiness probes, a `preStop` pause so the Service stops sending traffic before the graceful shutdown, a PodDisruptionBudget and a CPU autoscaler (3–6); the adapters and the file service with two replicas each. Addresses live in a ConfigMap; secrets come from the `ecom-secrets` Secret, created in the cluster from Vault and never kept in git. Postgres, Redis, Keycloak, Vault, Kafka, Temporal and the stores are outside the cluster. One image per deployable: `k8s/Dockerfile`, the jar on the plain JRE as a non-root user.
+
+`k8s/local` tries it on a laptop with a one-node k3s in Docker, on the main stack's network:
+
+```bash
+docker compose -f k8s/local/docker-compose.yml up -d
+docker build -f k8s/Dockerfile -t ecom/app:dev --build-arg JAR=app.jar ../ecom/app/build/libs   # and each service
+docker save ecom/app:dev ecom/uzcard-adapter:dev ecom/humo-adapter:dev ecom/file-service:dev | docker exec -i ecom-k8s-k3s-1 ctr images import -
+kubectl kustomize k8s/local | docker exec -i ecom-k8s-k3s-1 kubectl apply -f -
+k8s/local/dependencies.sh | docker exec -i ecom-k8s-k3s-1 kubectl apply -f -
+```
+
+The app answers on http://localhost:30085 (two replicas, one of each service, local-only secrets). `dependencies.sh` gives the cluster Services named `postgres`, `kafka` and so on that point at the compose containers; run it again after the main stack restarts.

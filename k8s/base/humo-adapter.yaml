@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: humo-adapter
+  labels: { app: humo-adapter }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: humo-adapter }
+  strategy:
+    rollingUpdate: { maxUnavailable: 0, maxSurge: 1 }
+  template:
+    metadata:
+      labels: { app: humo-adapter }
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: humo-adapter
+          image: ecom/humo-adapter:dev
+          ports: [{ name: http, containerPort: 8092 }]
+          envFrom:
+            - configMapRef: { name: ecom-config }
+            - configMapRef: { name: humo-adapter-config }
+          resources:
+            requests: { cpu: 250m, memory: 512Mi }
+            limits: { cpu: "1", memory: 1Gi }
+          startupProbe:
+            httpGet: { path: /actuator/health/liveness, port: http }
+            periodSeconds: 5
+            failureThreshold: 36
+          livenessProbe:
+            httpGet: { path: /actuator/health/liveness, port: http }
+            periodSeconds: 10
+          readinessProbe:
+            httpGet: { path: /actuator/health/readiness, port: http }
+            periodSeconds: 5
+          lifecycle:
+            preStop: { sleep: { seconds: 10 } }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: humo-adapter
+spec:
+  selector: { app: humo-adapter }
+  ports: [{ name: http, port: 8092, targetPort: http }]
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: humo-adapter-config
+data:
+  HUMO_PAYMENT_SERVER_URL: http://processing-sandbox:8080/humo/PaymentServer
+  HUMO_MIDDLEWARE_URL: http://processing-sandbox:8080/humo-middleware

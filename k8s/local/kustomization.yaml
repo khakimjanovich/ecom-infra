@@ -1,0 +1,52 @@
+# The base on a laptop: the local images, smaller sizes, the local-only secrets, and the app on a
+# node port. Secrets here are the public local defaults; a real cluster gets ecom-secrets from Vault.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ecom
+resources:
+  - ../base
+  - app-nodeport.yaml
+secretGenerator:
+  - name: ecom-secrets
+    options: { disableNameSuffixHash: true }
+    literals:
+      - PARTNER_DB_PASSWORD=local-only
+      - COMMISSION_DB_PASSWORD=local-only
+      - TERMINAL_DB_PASSWORD=local-only
+      - BIN_DB_PASSWORD=local-only
+      - CARD_DB_PASSWORD=local-only
+      - PAYMENT_DB_PASSWORD=local-only
+      - KEYCLOAK_CLIENT_SECRET=local-only
+      - VAULT_TOKEN=local-only
+      - OTP_SECRET=local-only-otp-secret
+      - S3_SECRET_KEY=local-only
+configMapGenerator:
+  - name: ecom-config
+    behavior: merge
+    literals:
+      # Tokens name localhost:8180 as their issuer; keys are fetched inside the network.
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://localhost:8180/realms/ecom
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI=http://keycloak:8080/realms/ecom/protocol/openid-connect/certs
+      - WEBHOOK_TEST_HOSTS=processing-sandbox
+patches:
+  # Two app replicas and one of each service fit a laptop; the base runs three and two.
+  - target: { kind: Deployment, name: app }
+    patch: |
+      - { op: replace, path: /spec/replicas, value: 2 }
+      - { op: replace, path: /spec/template/spec/containers/0/resources/requests/memory, value: 512Mi }
+      - { op: replace, path: /spec/template/spec/containers/0/resources/limits/memory, value: 1Gi }
+  - target: { kind: HorizontalPodAutoscaler, name: app }
+    patch: |
+      - { op: replace, path: /spec/minReplicas, value: 2 }
+  - target: { kind: PodDisruptionBudget, name: app }
+    patch: |
+      - { op: replace, path: /spec/minAvailable, value: 1 }
+  - target: { kind: Deployment, name: "(uzcard-adapter|humo-adapter|file-service)" }
+    patch: |
+      - { op: replace, path: /spec/replicas, value: 1 }
+      - { op: replace, path: /spec/template/spec/containers/0/resources/requests/memory, value: 256Mi }
+      - { op: replace, path: /spec/template/spec/containers/0/resources/limits/memory, value: 512Mi }
+  # Images built on the host and imported into k3s are never pulled.
+  - target: { kind: Deployment }
+    patch: |
+      - { op: add, path: /spec/template/spec/containers/0/imagePullPolicy, value: Never }

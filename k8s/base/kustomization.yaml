@@ -1,0 +1,13 @@
+# The system on Kubernetes: the app and the services it calls. Postgres, Redis, Keycloak, Vault,
+# Kafka, Temporal and the mail and file stores are outside, reached by the names in config.yaml
+# (managed services in production; the compose stack locally, see ../local).
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ecom
+resources:
+  - namespace.yaml
+  - config.yaml
+  - app.yaml
+  - uzcard-adapter.yaml
+  - humo-adapter.yaml
+  - file-service.yaml
