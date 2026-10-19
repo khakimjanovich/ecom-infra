@@ -12,7 +12,7 @@ secretGenerator:
     literals:
       - PARTNER_DB_PASSWORD=local-only
       - COMMISSION_DB_PASSWORD=local-only
-      - TERMINAL_DB_PASSWORD=local-only
+      - EPOS_DB_PASSWORD=local-only
       - BIN_DB_PASSWORD=local-only
       - CARD_DB_PASSWORD=local-only
       - PAYMENT_DB_PASSWORD=local-only

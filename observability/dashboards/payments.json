@@ -108,7 +108,7 @@
       "id": 3,
       "type": "stat",
       "title": "Failed before any money moved, last hour",
-      "description": "No live terminal or no fee rule for the card's scheme.",
+      "description": "No live e-POS terminal or no fee rule for the card's scheme.",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
