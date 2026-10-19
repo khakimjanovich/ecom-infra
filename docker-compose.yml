@@ -46,9 +46,11 @@ services:
       - ./keycloak/ecom-realm.json:/opt/keycloak/data/import/ecom-realm.json:ro
       - ./keycloak/themes/ecom:/opt/keycloak/themes/ecom:ro
 
+  # Simulated delays (a scheme that never answers) don't hold request threads, and the request
+  # journal keeps only the latest requests, so a long load run stays fast.
   processing-sandbox:
     image: wiremock/wiremock:3.13.1
-    command: ["--global-response-templating", "--disable-banner"]
+    command: ["--global-response-templating", "--disable-banner", "--max-request-journal-entries", "2000", "--async-response-enabled", "true", "--async-response-threads", "50"]
     ports: ["8099:8080"] # stands in for Uzcard and Humo; see processing-sandbox/README.md
     volumes:
       - ./processing-sandbox/mappings:/home/wiremock/mappings:ro
