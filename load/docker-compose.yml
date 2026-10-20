@@ -58,7 +58,7 @@ services:
     volumes: ["${ECOM_DIR:-../../ecom}/adapters/uzcard-adapter/build/libs/uzcard-adapter.jar:/opt/ecom/uzcard-adapter.jar:ro"]
     environment:
       <<: *jvm
-      SV_GATE_URL: http://processing-sandbox:8080/uzcard
+      UZCARD_URL: http://processing-sandbox:8080/uzcard
 
   humo-adapter:
     <<: *server

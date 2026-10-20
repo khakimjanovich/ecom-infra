@@ -50,4 +50,4 @@ kind: ConfigMap
 metadata:
   name: uzcard-adapter-config
 data:
-  SV_GATE_URL: http://processing-sandbox:8080/uzcard # Uzcard's SVGate; the sandbox stands in for it
+  UZCARD_URL: http://processing-sandbox:8080/uzcard # Uzcard's API; the sandbox stands in for it

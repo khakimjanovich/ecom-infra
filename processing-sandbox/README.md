@@ -1,10 +1,10 @@
 # Processing sandbox
 
-A WireMock stand-in for the Uzcard (SVGate, JSON-RPC) and Humo (Payment Server SOAP + middleware REST) test environments, so the whole system runs on a laptop.
+A WireMock stand-in for the Uzcard (its SV-Gate JSON-RPC API) and Humo (Payment Server SOAP + middleware REST) test environments, so the whole system runs on a laptop.
 
 | Path | Speaks |
 |---|---|
-| `/uzcard/api/jsonrpc` | SVGate JSON-RPC: `cards.new.otp`, `cards.new.verify`, `trans.pay.purpose`, `trans.reverse`, `trans.ext`, `get.bin.list` |
+| `/uzcard/api/jsonrpc` | Uzcard JSON-RPC: `cards.new.otp`, `cards.new.verify`, `trans.pay.purpose`, `trans.reverse`, `trans.ext`, `get.bin.list` |
 | `/humo/PaymentServer` | SOAP `urn:PaymentServer`: `Payment` (hold, then confirm), `CancelRequest`, `ReturnPayment`, `GetPayment` |
 | `/humo-middleware/...` | `/v1/send/sms`, `/v1/send/code`, `/v2/pm/bins` |
 | `/merchant/webhooks` | a merchant's webhook endpoint: answers 200; WireMock's request journal (`/__admin/requests`) shows what arrived |
