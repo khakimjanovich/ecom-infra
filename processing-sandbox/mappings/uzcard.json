@@ -52,8 +52,12 @@
           "jsonrpc": "2.0",
           "id": "{{jsonPath request.body '$.id'}}",
           "result": {
-            "token": "uztok-{{jsonPath request.body '$.params.otp.id'}}",
-            "status": "ACTIVE"
+            "id": "uztok-{{jsonPath request.body '$.params.otp.id'}}",
+            "pan": "860030******7890",
+            "status": 0,
+            "fullName": "TEST CARDHOLDER",
+            "phone": "998900000000",
+            "sms": true
           }
         },
         "transformers": [
