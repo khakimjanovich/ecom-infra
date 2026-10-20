@@ -16,14 +16,35 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "jsonrpc": "2.0",
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": {
-            "id": "{{jsonPath request.body '$.params.card.pan'}}",
-            "phoneMask": "+998 90 *** ** 01"
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":{{jsonPath request.body '$.params.card.pan'}},\"phoneMask\":\"0101\",\"verified\":false}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 0,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.new.verify')]"
+          },
+          {
+            "matchesJsonPath": "$.params.otp[?(@.code == '111111')]"
+          },
+          {
+            "matchesJsonPath": "$.params.otp[?(@.id == 8600140200000013)]"
           }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
         },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"uztok-{{jsonPath request.body '$.params.otp.id'}}\",\"username\":\"sandbox\",\"pan\":\"860014******0013\",\"status\":12,\"phone\":\"998900000101\",\"fullName\":\"TEST CARDHOLDER\",\"sms\":true}}",
         "transformers": [
           "response-template"
         ]
@@ -48,18 +69,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "jsonrpc": "2.0",
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": {
-            "id": "uztok-{{jsonPath request.body '$.params.otp.id'}}",
-            "pan": "860030******7890",
-            "status": 0,
-            "fullName": "TEST CARDHOLDER",
-            "phone": "998900000000",
-            "sms": true
-          }
-        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"uztok-{{jsonPath request.body '$.params.otp.id'}}\",\"username\":\"sandbox\",\"pan\":\"860014******7890\",\"status\":0,\"phone\":\"998900000101\",\"fullName\":\"TEST CARDHOLDER\",\"sms\":true}}",
         "transformers": [
           "response-template"
         ]
@@ -81,14 +91,29 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "jsonrpc": "2.0",
-          "id": "{{jsonPath request.body '$.id'}}",
-          "error": {
-            "code": -231,
-            "message": "Invalid OTP code"
+        "body": "{\"jsonrpc\": \"2.0\", \"id\": \"{{jsonPath request.body '$.id'}}\", \"error\": {\"code\": -269, \"message\": \"OTP is not correct!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.remove.token')]"
           }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
         },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"{{jsonPath request.body '$.params.tokens[0]'}}\",\"status\":1}]}",
         "transformers": [
           "response-template"
         ]
@@ -113,20 +138,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "jsonrpc": "2.0",
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": {
-            "id": "{{randomValue length=10 type='NUMERIC'}}",
-            "refNum": "{{randomValue length=12 type='NUMERIC'}}",
-            "ext": "{{jsonPath request.body '$.params.tran.ext'}}",
-            "amount": "{{jsonPath request.body '$.params.tran.amount'}}",
-            "resp": 51,
-            "respSV": "51",
-            "respText": "Insufficient funds",
-            "status": "ROK"
-          }
-        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"{{randomValue length=12 type='NUMERIC'}}\",\"ext\":\"{{jsonPath request.body '$.params.tran.ext'}}\",\"pan\":\"860014******7890\",\"tranType\":\"DEBIT\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":{{jsonPath request.body '$.params.tran.amount'}},\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":51,\"respText\":\"Declined\",\"respSV\":\"51\",\"status\":\"ERR\"}}",
         "transformers": [
           "response-template"
         ]
@@ -151,20 +163,57 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "jsonrpc": "2.0",
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": {
-            "id": "{{randomValue length=10 type='NUMERIC'}}",
-            "refNum": "{{randomValue length=12 type='NUMERIC'}}",
-            "ext": "{{jsonPath request.body '$.params.tran.ext'}}",
-            "amount": "{{jsonPath request.body '$.params.tran.amount'}}",
-            "resp": 54,
-            "respSV": "54",
-            "respText": "Expired card",
-            "status": "ROK"
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"{{randomValue length=12 type='NUMERIC'}}\",\"ext\":\"{{jsonPath request.body '$.params.tran.ext'}}\",\"pan\":\"860014******7890\",\"tranType\":\"DEBIT\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":{{jsonPath request.body '$.params.tran.amount'}},\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":33,\"respText\":\"Declined\",\"respSV\":\"33\",\"status\":\"ERR\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.pay.purpose')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000013')]"
           }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
         },
+        "body": "{\"jsonrpc\": \"2.0\", \"id\": \"{{jsonPath request.body '$.id'}}\", \"error\": {\"code\": -205, \"message\": \"Card blocked!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.pay.purpose')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000017')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\": \"2.0\", \"id\": \"{{jsonPath request.body '$.id'}}\", \"error\": {\"code\": -301, \"message\": \"Check out the trans.ext method later!\"}}",
         "transformers": [
           "response-template"
         ]
@@ -189,13 +238,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "jsonrpc": "2.0",
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": {
-            "id": "0"
-          }
-        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"0\"}}",
         "transformers": [
           "response-template"
         ],
@@ -218,20 +261,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "jsonrpc": "2.0",
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": {
-            "id": "{{randomValue length=10 type='NUMERIC'}}",
-            "refNum": "{{randomValue length=12 type='NUMERIC'}}",
-            "ext": "{{jsonPath request.body '$.params.tran.ext'}}",
-            "amount": "{{jsonPath request.body '$.params.tran.amount'}}",
-            "resp": 0,
-            "respSV": "00",
-            "respText": "Approved",
-            "status": "OK"
-          }
-        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"{{randomValue length=12 type='NUMERIC'}}\",\"ext\":\"{{jsonPath request.body '$.params.tran.ext'}}\",\"pan\":\"860014******7890\",\"tranType\":\"DEBIT\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":{{jsonPath request.body '$.params.tran.amount'}},\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"}}",
         "transformers": [
           "response-template"
         ]
@@ -253,16 +283,79 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "jsonrpc": "2.0",
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": {
-            "id": "{{jsonPath request.body '$.params.tranId'}}",
-            "resp": 0,
-            "respSV": "00",
-            "status": "OK"
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"{{jsonPath request.body '$.params.tranId'}}\",\"ext\":\"sandbox\",\"pan\":\"860014******7890\",\"tranType\":\"DEBIT\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":100000,\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"},{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"{{jsonPath request.body '$.params.tranId'}}\",\"ext\":\"sandbox\",\"pan\":\"860014******7890\",\"tranType\":\"REVERSAL\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":100000,\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"ROK\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.reverse.partial')]"
           }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
         },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"{{jsonPath request.body '$.params.tran.tranId'}}\",\"ext\":\"{{jsonPath request.body '$.params.tran.ext'}}\",\"pan\":\"860014******7890\",\"tranType\":\"REVERSAL\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":{{jsonPath request.body '$.params.tran.reverseAmount'}},\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.ext')]"
+          },
+          {
+            "matchesJsonPath": "$.params[?(@.extId =~ /never-.*/)]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\": \"2.0\", \"id\": \"{{jsonPath request.body '$.id'}}\", \"error\": {\"code\": -208, \"message\": \"Transaction not found!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.ext')]"
+          },
+          {
+            "matchesJsonPath": "$.params[?(@.extId =~ /reversed-.*/)]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"000000000777\",\"ext\":\"{{jsonPath request.body '$.params.extId'}}\",\"pan\":\"860014******7890\",\"tranType\":\"DEBIT\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":100000,\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"},{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"000000000777\",\"ext\":\"{{jsonPath request.body '$.params.extId'}}\",\"pan\":\"860014******7890\",\"tranType\":\"REVERSAL\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":100000,\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"ROK\"}]}",
         "transformers": [
           "response-template"
         ]
@@ -284,20 +377,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "jsonrpc": "2.0",
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": [
-            {
-              "id": "{{randomValue length=10 type='NUMERIC'}}",
-              "refNum": "{{randomValue length=12 type='NUMERIC'}}",
-              "ext": "{{jsonPath request.body '$.params.extId'}}",
-              "resp": 0,
-              "respSV": "00",
-              "status": "OK"
-            }
-          ]
-        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"{{randomValue length=12 type='NUMERIC'}}\",\"ext\":\"{{jsonPath request.body '$.params.extId'}}\",\"pan\":\"860014******7890\",\"tranType\":\"DEBIT\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":100000,\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"}]}",
         "transformers": [
           "response-template"
         ]
@@ -319,28 +399,211 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "jsonrpc": "2.0",
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": [
-            {
-              "bin": "860002",
-              "instId": "9002"
-            },
-            {
-              "bin": "860014",
-              "instId": "9013"
-            },
-            {
-              "bin": "860049",
-              "instId": "9049"
-            },
-            {
-              "bin": "860031",
-              "instId": "9031"
-            }
-          ]
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"bin\": \"860002\", \"instId\": \"9002\"}, {\"bin\": \"860014\", \"instId\": \"9013\"}, {\"bin\": \"860049\", \"instId\": \"9049\"}, {\"bin\": \"860031\", \"instId\": \"9031\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'terminal.add')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
         },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"code\":0,\"message\":\"Terminal Id and Merchant Id added successfully!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'terminal.check')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal[?(@.terminalId == '00000000')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\": \"2.0\", \"id\": \"{{jsonPath request.body '$.id'}}\", \"error\": {\"code\": -254, \"message\": \"Terminal Id and Merchant Id not found in the database!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'terminal.check')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"username\":\"sandbox\",\"port\":0,\"name\":\"Sandbox e-POS\",\"type\":1,\"purpose\":\"payment\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'terminal.get')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"pid\":100001,\"terminalId\":\"T0000001\",\"merchantId\":\"90000001\",\"username\":\"sandbox\",\"terminal_type\":1,\"instId\":\"9013\",\"name\":\"Sandbox e-POS\",\"port\":0,\"purpose\":\"payment\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'terminal.remove')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal[?(@.terminalId == '00000000')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\": \"2.0\", \"id\": \"{{jsonPath request.body '$.id'}}\", \"error\": {\"code\": -254, \"message\": \"Terminal Id and Merchant Id not found in the database!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'terminal.remove')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"code\":0,\"message\":\"Terminal Id and Merchant Id removed Successfully!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'report.sum')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"from\":\"{{jsonPath request.body '$.params.report.from'}}\",\"to\":\"{{jsonPath request.body '$.params.report.to'}}\",\"count\":2,\"sum\":250000}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'report.short')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"trans\":[{\"amount\":100000,\"date\":\"261021093940\",\"svId\":\"000000000101\",\"extId\":\"sandbox-1\"},{\"amount\":150000,\"date\":\"261021104245\",\"svId\":\"000000000102\",\"extId\":\"sandbox-2\"}]}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'report.detail')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"trans\":[{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"000000000101\",\"ext\":\"sandbox-1\",\"pan\":\"860014******7890\",\"tranType\":\"DEBIT\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":100000,\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"}]}}",
         "transformers": [
           "response-template"
         ]

@@ -19,7 +19,7 @@
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=9 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code_final</name><value>116</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details><action>-1</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=7 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code</name><value>116</value></item><item><name>auth_action_code_final</name><value>116</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item><item><name>internal_pan_masked</name><value>986009******1238</value></item><item><name>amount</name><value>{{xPath request.body '//item[name=\"amount\"]/value/text()'}}</value></item></details><action>4</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
         "transformers": [
           "response-template"
         ]
@@ -44,7 +44,7 @@
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=9 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code_final</name><value>101</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details><action>-1</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=7 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code</name><value>101</value></item><item><name>auth_action_code_final</name><value>101</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item><item><name>internal_pan_masked</name><value>986009******1238</value></item><item><name>amount</name><value>{{xPath request.body '//item[name=\"amount\"]/value/text()'}}</value></item></details><action>4</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
         "transformers": [
           "response-template"
         ]
@@ -69,7 +69,7 @@
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=9 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details><action>4</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=7 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code</name><value>000</value></item><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item><item><name>internal_pan_masked</name><value>986009******1238</value></item><item><name>amount</name><value>{{xPath request.body '//item[name=\"amount\"]/value/text()'}}</value></item></details><action>4</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
         "transformers": [
           "response-template"
         ],
@@ -92,7 +92,54 @@
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=9 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details><action>4</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=7 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code</name><value>000</value></item><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item><item><name>internal_pan_masked</name><value>986009******1238</value></item><item><name>amount</name><value>{{xPath request.body '//item[name=\"amount\"]/value/text()'}}</value></item></details><action>4</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "<billerRef>SOAP_RECO</billerRef>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=7 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>terminal_id</name><value>{{xPath request.body '//item[name=\"terminal_id\"]/value/text()'}}</value></item><item><name>ttl</name><value>10080</value></item><item><name>ttl_action</name><value>0001</value></item></details><action>4</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "<payinstrRef>SOAP_RECO</payinstrRef>"
+          },
+          {
+            "contains": "<confirmed>true</confirmed>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=7 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>ttl</name><value>10080</value></item><item><name>ttl_action</name><value>0001</value></item><item><name>debits_number</name><value>2.0000000000000</value></item><item><name>debits_amount</name><value>250000.0000</value></item><item><name>credits_reversal_number</name><value>0.0000000000000</value></item><item><name>credits_reversal_amount</name><value>0.0000</value></item><item><name>reconcile_info</name><value>202610210000000</value></item></details><action>10</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
         "transformers": [
           "response-template"
         ]
@@ -105,9 +152,6 @@
         "urlPath": "/humo/PaymentServer",
         "bodyPatterns": [
           {
-            "contains": "<ns:Payment>"
-          },
-          {
             "contains": "<confirmed>true</confirmed>"
           }
         ]
@@ -117,7 +161,7 @@
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{xPath request.body '//paymentID/text()'}}</paymentID><details><item><name>auth_action_code_final</name><value>000</value></item></details><action>10</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:PaymentResponse><paymentID>{{randomValue length=7 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>auth_action_code</name><value>000</value></item><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details><action>10</action></ns:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
         "transformers": [
           "response-template"
         ]
@@ -130,7 +174,7 @@
         "urlPath": "/humo/PaymentServer",
         "bodyPatterns": [
           {
-            "contains": "<ns:CancelRequest>"
+            "contains": "CancelRequest"
           }
         ]
       },
@@ -139,7 +183,7 @@
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:CancelRequestResponse><paymentID>{{xPath request.body '//paymentID/text()'}}</paymentID><action>9</action></ns:CancelRequestResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:CancelRequestResponse/></SOAP-ENV:Body></SOAP-ENV:Envelope>",
         "transformers": [
           "response-template"
         ]
@@ -152,7 +196,10 @@
         "urlPath": "/humo/PaymentServer",
         "bodyPatterns": [
           {
-            "contains": "<ns:ReturnPayment>"
+            "contains": "ReturnPayment"
+          },
+          {
+            "contains": "<name>centre_id</name>"
           }
         ]
       },
@@ -161,7 +208,57 @@
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:ReturnPaymentResponse><paymentID>{{xPath request.body '//paymentID/text()'}}</paymentID><action>9</action></ns:ReturnPaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:ReturnPaymentResponse/></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "GetPayment"
+          },
+          {
+            "contains": "<paymentRef>unknown-"
+          }
+        ]
+      },
+      "response": {
+        "status": 500,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><SOAP-ENV:Fault><faultcode>SOAP-ENV:Server</faultcode><faultstring>Payment not found</faultstring></SOAP-ENV:Fault></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "GetPayment"
+          },
+          {
+            "contains": "<paymentRef>active-"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:GetPaymentResponse><paymentID>3847996</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><status>active</status><details><item><name>auth_action_code_final</name><value>000</value></item></details></ns:GetPaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
         "transformers": [
           "response-template"
         ]
@@ -174,7 +271,7 @@
         "urlPath": "/humo/PaymentServer",
         "bodyPatterns": [
           {
-            "contains": "<ns:GetPayment>"
+            "contains": "GetPayment"
           }
         ]
       },
@@ -183,7 +280,7 @@
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Body><ns:GetPaymentResponse><paymentID>{{randomValue length=9 type='NUMERIC'}}</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><status>finished</status><details><item><name>auth_ref_number</name><value>{{randomValue length=12 type='NUMERIC'}}</value></item></details></ns:GetPaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body><ns:GetPaymentResponse><paymentID>3847996</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><status>finished</status><details><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_ref_number</name><value>414906298880</value></item><item><name>internal_pan_masked</name><value>986009******1238</value></item></details></ns:GetPaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
         "transformers": [
           "response-template"
         ]
@@ -200,12 +297,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": {
-            "sent": true
-          }
-        },
+        "body": "{\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"message\":\"SMS sent\",\"msisdn\":\"+99890*****01\"}}",
         "transformers": [
           "response-template"
         ]
@@ -227,12 +319,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "id": "{{jsonPath request.body '$.id'}}",
-          "result": {
-            "token": "humotok-{{jsonPath request.body '$.params.pan'}}"
-          }
-        },
+        "body": "{\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"message\":\"Success\",\"token\":\"humotok-{{jsonPath request.body '$.params.pan'}}\"}}",
         "transformers": [
           "response-template"
         ]
@@ -249,13 +336,46 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "id": "{{jsonPath request.body '$.id'}}",
-          "error": {
-            "code": 100,
-            "message": "Wrong code"
+        "body": "{\"id\":\"{{jsonPath request.body '$.id'}}\",\"error\":{\"code\":404,\"message\":\"The verification code is incorrect\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo-middleware/v3/iiacs/card",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$.params[?(@.primaryAccountNumber == '9860090101190073')]"
           }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
         },
+        "body": "{\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"listSize\":1,\"card\":{\"institutionId\":\"Trastbank\",\"primaryAccountNumber\":\"986009******0073\",\"expiry\":\"2804\",\"nameOnCard\":\"TEST CARDHOLDER\",\"bankC\":\"09\",\"pinTryCount\":0,\"statuses\":{\"item\":[{\"type\":\"card\",\"actionCode\":\"209\",\"actionDescription\":\"Pick-up, stolen card\"},{\"type\":\"hot\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"}]}},\"balance\":{\"currency\":\"860\",\"availableAmount\":0},\"mb\":{\"state\":\"on\",\"phone\":\"+998900000101\",\"message\":\"Status of the customer mobile agreement is active\"}}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo-middleware/v3/iiacs/card"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"listSize\":1,\"card\":{\"institutionId\":\"Trastbank\",\"primaryAccountNumber\":\"986009******1238\",\"expiry\":\"2804\",\"nameOnCard\":\"TEST CARDHOLDER\",\"bankC\":\"09\",\"pinTryCount\":0,\"statuses\":{\"item\":[{\"type\":\"card\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"},{\"type\":\"hot\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"},{\"type\":\"issuer\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"},{\"type\":\"user\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"}]}},\"balance\":{\"currency\":\"860\",\"availableAmount\":500000000},\"mb\":{\"state\":\"on\",\"phone\":\"+998900000101\",\"message\":\"Status of the customer mobile agreement is active\"}}}",
         "transformers": [
           "response-template"
         ]
@@ -272,23 +392,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "jsonBody": {
-          "id": "bins",
-          "result": [
-            {
-              "bin": "986009",
-              "bank_c": "09"
-            },
-            {
-              "bin": "986001",
-              "bank_c": "01"
-            },
-            {
-              "bin": "986012",
-              "bank_c": "12"
-            }
-          ]
-        },
+        "body": "{\"data\": [{\"bank_c\": \"09\", \"bank_name\": \"Trastbank\", \"bin_code\": \"98600901\", \"bin_owner\": \"PERSONAL\", \"isVirtual\": \"0\", \"isCobadge\": \"0\", \"limited_in_epos\": \"0\"}, {\"bank_c\": \"01\", \"bank_name\": \"Ipotekabank\", \"bin_code\": \"98600186\", \"bin_owner\": \"PERSONAL\", \"isVirtual\": \"1\", \"isCobadge\": \"0\", \"limited_in_epos\": \"0\"}, {\"bank_c\": \"12\", \"bank_name\": \"Asakabank\", \"bin_code\": \"98601201\", \"bin_owner\": \"PERSONAL\", \"isVirtual\": \"0\", \"isCobadge\": \"1\", \"limited_in_epos\": \"0\"}]}",
         "transformers": [
           "response-template"
         ]
