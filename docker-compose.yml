@@ -66,7 +66,7 @@ services:
 
   file-store:
     image: chrislusf/seaweedfs:3.97
-    # An S3-compatible store for the file service; in production, any S3.
+    # An S3-compatible store for the app's files; in production, any S3.
     command: ["server", "-s3", "-s3.config=/etc/seaweedfs/s3.json", "-dir=/data", "-master.volumeSizeLimitMB=64", "-volume.max=0"] # 0: as many volumes as the disk allows
     ports: ["8333:8333"] # S3 API, access key ecom / local-only
     volumes:

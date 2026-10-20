@@ -10,4 +10,3 @@ resources:
   - app.yaml
   - uzcard-adapter.yaml
   - humo-adapter.yaml
-  - file-service.yaml

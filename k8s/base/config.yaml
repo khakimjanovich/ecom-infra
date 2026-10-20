@@ -16,6 +16,6 @@ data:
   KAFKA_BOOTSTRAP: kafka:9092
   UZCARD_ADAPTER_URL: http://uzcard-adapter:8091
   HUMO_ADAPTER_URL: http://humo-adapter:8092
-  FILE_SERVICE_URL: http://file-service:8093
+  S3_ENDPOINT: http://file-store:8333
   # The heap follows the container's memory limit.
   JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=75

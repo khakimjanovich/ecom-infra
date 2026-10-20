@@ -376,7 +376,7 @@
             "type": "loki",
             "uid": "loki"
           },
-          "expr": "{service_name=~\"ecom|uzcard-adapter|humo-adapter|file-service\"} | detected_level=~\"warn|error\"",
+          "expr": "{service_name=~\"ecom|uzcard-adapter|humo-adapter\"} | detected_level=~\"warn|error\"",
           "refId": "A"
         }
       ]

@@ -41,7 +41,7 @@ patches:
   - target: { kind: PodDisruptionBudget, name: app }
     patch: |
       - { op: replace, path: /spec/minAvailable, value: 1 }
-  - target: { kind: Deployment, name: "(uzcard-adapter|humo-adapter|file-service)" }
+  - target: { kind: Deployment, name: "(uzcard-adapter|humo-adapter)" }
     patch: |
       - { op: replace, path: /spec/replicas, value: 1 }
       - { op: replace, path: /spec/template/spec/containers/0/resources/requests/memory, value: 256Mi }

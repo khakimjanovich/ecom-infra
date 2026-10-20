@@ -1,7 +1,7 @@
 {
   "identities": [
     {
-      "name": "file-service",
+      "name": "ecom",
       "credentials": [{ "accessKey": "ecom", "secretKey": "local-only" }],
       "actions": ["Admin", "Read", "Write", "List", "Tagging"]
     }
