@@ -36,6 +36,11 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.4.0
     command: start-dev --import-realm
+    # Without a limit its JVM sizes itself from the whole Docker VM and is the first to be killed
+    # when memory runs short; with one, its heap follows this limit.
+    deploy:
+      resources:
+        limits: { memory: 1G }
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-local-only}
