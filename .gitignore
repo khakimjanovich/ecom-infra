@@ -11,6 +11,3 @@ out/
 .idea/
 *.iml
 .DS_Store
-
-# The OpenTelemetry Java agent, copied here by the otel-agent service
-observability/agent/

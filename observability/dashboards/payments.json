@@ -46,7 +46,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (outcome) (rate(ecom_payments_debits_total[1m])) * 60",
+          "expr": "sum by (outcome) (rate(ecom_payments_debits_total[5m])) * 60",
           "legendFormat": "{{outcome}}",
           "refId": "A"
         }
@@ -173,7 +173,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "s"
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -189,7 +189,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "histogram_quantile(0.95, sum by (le, scheme) (rate(ecom_payments_debit_duration_seconds_bucket[5m])))",
+          "expr": "histogram_quantile(0.95, sum by (le, scheme) (rate(ecom_payments_debit_duration_milliseconds_bucket[5m])))",
           "legendFormat": "{{scheme}}",
           "refId": "A"
         }
@@ -212,7 +212,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "unit": "s"
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -228,7 +228,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "histogram_quantile(0.95, sum by (le, service_name) (rate(http_server_request_duration_seconds_bucket[5m])))",
+          "expr": "histogram_quantile(0.95, sum by (le, service_name) (rate(http_server_requests_milliseconds_bucket[5m])))",
           "legendFormat": "{{service_name}}",
           "refId": "A"
         }
@@ -267,7 +267,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (service_name) (rate(http_server_request_duration_seconds_count{http_response_status_code=~\"5..\"}[1m])) * 60",
+          "expr": "sum by (service_name) (rate(http_server_requests_milliseconds_count{status=~\"5..\"}[5m])) * 60",
           "legendFormat": "{{service_name}}",
           "refId": "A"
         }
@@ -306,8 +306,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "histogram_quantile(0.95, sum by (le, pool_name) (rate(db_client_connections_wait_time_milliseconds_bucket[5m])))",
-          "legendFormat": "{{service_name}} \u00b7 {{pool_name}}",
+          "expr": "histogram_quantile(0.95, sum by (le, service_name, pool) (rate(hikaricp_connections_acquire_milliseconds_bucket[5m])))",
+          "legendFormat": "{{service_name}} \u00b7 {{pool}}",
           "refId": "A"
         }
       ]

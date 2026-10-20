@@ -16,6 +16,7 @@ data:
   KAFKA_BOOTSTRAP: kafka:9092
   OTLP_TRACES_ENDPOINT: http://observability:4318/v1/traces
   OTLP_METRICS_ENDPOINT: http://observability:4318/v1/metrics
+  OTLP_LOGS_ENDPOINT: http://observability:4318/v1/logs
   UZCARD_ADAPTER_URL: http://uzcard-adapter:8091
   HUMO_ADAPTER_URL: http://humo-adapter:8092
   S3_ENDPOINT: http://file-store:8333
