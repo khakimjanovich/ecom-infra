@@ -16,7 +16,35 @@ docker compose exec -e VAULT_ADDR=http://127.0.0.1:8200 -e VAULT_TOKEN=local-onl
 
 Dev mode keeps everything in memory, so keys are gone after a restart.
 SeaweedFS (http://localhost:8333, S3 API, access key `ecom` / `local-only`) stores the app's files (merchants' documents, website logos), the way any S3 would in production.
-Temporal (dev server, gRPC on `7233`, UI at http://localhost:8233) keeps the workflows that resolve debits a card scheme didn't answer; its state lives in memory. Kafka is added when the system needs it.
+Temporal (dev server, gRPC on `7233`, UI at http://localhost:8233) keeps the workflows that resolve debits a card scheme didn't answer; its state lives in memory. Kafka (KRaft, one node; `kafka:9092` inside Docker, `localhost:9102` from the host) carries payment events on `payments.events`, with failed deliveries on `payments.events.DLT`.
+
+## Where to look
+
+Each step of a process leaves its trace in one place:
+
+| Process | Where | What you see |
+|---|---|---|
+| Sign-up and email codes | Mailpit, http://localhost:8025 | Every email the app sends: one-time codes, notices |
+| Logins, roles, API clients | Keycloak, http://localhost:8180, realm `ecom` | Users, roles, machine clients, sessions |
+| Documents and logos | SeaweedFS, S3 API on `localhost:8333` (`ecom` / `local-only`) | Buckets `partner-documents` and `sales-point-logos` |
+| Merchants' signing keys | Vault, http://localhost:8200, token `local-only` | `secret/merchants/<client id>` |
+| Every module's data | Postgres, `localhost:5442`, database `acquiring`, user `ecom_viewer` (read only) | Each module's schema: `partner`, `commission`, `epos`, `bin`, `card`, `payment` |
+| One-time codes, nonces, page locks | Redis, `localhost:6389` | Short-lived keys such as `ecom:hmac:nonce:*` and `ecom:payment:page-lock:*` |
+| Calls to Uzcard and Humo | Processing sandbox, http://localhost:8099/__admin/requests | Every call the adapters made, and the answer |
+| A debit the scheme didn't answer | Temporal UI, http://localhost:8233 | One workflow per payment: each status check, wait and retry |
+| Payment events and webhooks | Kafka, `localhost:9102` (no UI); table `payment.webhook_delivery` | Events on `payments.events`, failed ones on `payments.events.DLT`; every delivery attempt |
+| One request end to end | Grafana, http://localhost:3030 → Tempo | The trace from the app into the adapters, with SQL and Redis |
+| Errors and warnings | Grafana → Loki | Logs from every service, linked to their traces |
+| Load, latency, debit outcomes | Grafana → **ecom · payments** (Prometheus) | Debits by scheme and outcome, p95 request time, database pool |
+| What each module exposes | The app's Swagger UI, http://localhost:8080/swagger-ui/index.html | Public APIs, and the `…Internal` operations other modules call |
+
+Reading the events:
+
+```bash
+docker compose exec kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic payments.events --from-beginning
+```
+
+One payment, in order: it is created (Swagger or k6), its status is in `payment.payment`, the scheme call is in the sandbox, a debit with no answer waits in Temporal, its event goes through Kafka with each webhook attempt in `payment.webhook_delivery`, and Grafana shows the whole path as one trace. Traces and logs come only from services run with the OpenTelemetry agent (below); the load stack on :8085 runs without it.
 
 ## Observability
 
