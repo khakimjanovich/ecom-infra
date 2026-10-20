@@ -20,6 +20,9 @@ x-server: &server
   environment: &jvm
     # The heap follows the container's memory limit.
     JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=75
+    # Traces and metrics go to the observability service on the stack's network.
+    OTLP_TRACES_ENDPOINT: http://observability:4318/v1/traces
+    OTLP_METRICS_ENDPOINT: http://observability:4318/v1/metrics
 
 services:
   app:

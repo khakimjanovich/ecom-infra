@@ -44,13 +44,13 @@ Reading the events:
 docker compose exec kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic payments.events --from-beginning
 ```
 
-One payment, in order: it is created (Swagger or k6), its status is in `payment.payment`, the scheme call is in the sandbox, a debit with no answer waits in Temporal, its event goes through Kafka with each webhook attempt in `payment.webhook_delivery`, and Grafana shows the whole path as one trace. Traces and logs come only from services run with the OpenTelemetry agent (below); the load stack on :8085 runs without it.
+One payment, in order: it is created (Swagger or k6), its status is in `payment.payment`, the scheme call is in the sandbox, a debit with no answer waits in Temporal, its event goes through Kafka with each webhook attempt in `payment.webhook_delivery`, and Grafana shows the whole path as one trace. Every request has one trace id: each log line carries it as `trace.id` (and `span.id`), the app returns it to callers as `X-Request-Id`, and it travels to the adapters (`traceparent`), through the outbox and Kafka, and into Temporal. To follow one request, filter the logs of every service by its `trace.id`, or open the trace in Grafana → Tempo.
 
 ## Observability
 
 `observability` (Grafana's otel-lgtm image) takes OpenTelemetry over OTLP (`4317` gRPC, `4318` HTTP) and keeps metrics (Prometheus), traces (Tempo) and logs (Loki), with Grafana at http://localhost:3030 and the **ecom · payments** dashboard: debits by outcome, unknown and failed debits, the scheme's answer time, request time and server errors per service, database pool waits, and warnings with links to their traces. Data lives in memory and is gone after a restart.
 
-The services are instrumented by the OpenTelemetry Java agent, not by code: `otel-agent` copies the pinned agent to `observability/agent/`, and `observability/agent.env` holds the settings. To run a service with it:
+The app and the adapters trace themselves (Spring Boot with Micrometer Tracing and OpenTelemetry) and send traces and metrics over OTLP to `OTLP_TRACES_ENDPOINT` / `OTLP_METRICS_ENDPOINT` (default `localhost:4318`; the load stack and Kubernetes use `observability:4318`). The OpenTelemetry Java agent below is now needed only to ship logs to Loki; running it as well traces every request twice. The agent setup: `otel-agent` copies the pinned agent to `observability/agent/`, and `observability/agent.env` holds the settings. To run a service with it:
 
 ```bash
 set -a; . ../ecom-infra/observability/agent.env; set +a

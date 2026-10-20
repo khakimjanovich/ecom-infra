@@ -14,6 +14,8 @@ data:
   VAULT_URL: http://vault:8200
   TEMPORAL_TARGET: temporal:7233
   KAFKA_BOOTSTRAP: kafka:9092
+  OTLP_TRACES_ENDPOINT: http://observability:4318/v1/traces
+  OTLP_METRICS_ENDPOINT: http://observability:4318/v1/metrics
   UZCARD_ADAPTER_URL: http://uzcard-adapter:8091
   HUMO_ADAPTER_URL: http://humo-adapter:8092
   S3_ENDPOINT: http://file-store:8333
