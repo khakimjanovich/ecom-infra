@@ -14,6 +14,7 @@ data:
   VAULT_URL: http://vault:8200
   TEMPORAL_TARGET: temporal:7233
   KAFKA_BOOTSTRAP: kafka:9092
+  LOGGING_STRUCTURED_FORMAT_CONSOLE: ecs # logs as ECS JSON, for machines
   OTLP_TRACES_ENDPOINT: http://observability:4318/v1/traces
   OTLP_METRICS_ENDPOINT: http://observability:4318/v1/metrics
   OTLP_LOGS_ENDPOINT: http://observability:4318/v1/logs

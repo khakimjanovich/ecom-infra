@@ -21,6 +21,7 @@ x-server: &server
     # The heap follows the container's memory limit.
     JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=75
     # Traces, metrics and logs go to the observability service on the stack's network.
+    LOGGING_STRUCTURED_FORMAT_CONSOLE: ecs # logs as ECS JSON, for machines
     OTLP_TRACES_ENDPOINT: http://observability:4318/v1/traces
     OTLP_METRICS_ENDPOINT: http://observability:4318/v1/metrics
     OTLP_LOGS_ENDPOINT: http://observability:4318/v1/logs
