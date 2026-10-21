@@ -11,9 +11,7 @@ data:
   MAIL_HOST: mailpit
   MAIL_PORT: "1025"
   ECOM_KEYCLOAK_URL: http://keycloak:8080
-  VAULT_URL: http://vault:8200
-  VAULT_IMPORT: vault://secret/ecom
-  VAULT_FAIL_FAST: "true"
+  VAULT_URL: http://vault:8200 # secret/ecom is required and read fail-fast: the app's defaults
   TEMPORAL_TARGET: temporal:7233
   KAFKA_BOOTSTRAP: kafka:9092
   LOGGING_STRUCTURED_FORMAT_CONSOLE: ecs # logs as ECS JSON, for machines
