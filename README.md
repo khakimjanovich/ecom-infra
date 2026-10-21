@@ -18,6 +18,26 @@ Dev mode keeps everything in memory, so keys are gone after a restart. Every oth
 SeaweedFS (http://localhost:8333, S3 API, access key `ecom` / `local-only`) stores the app's files (merchants' documents, website logos), the way any S3 would in production. The buckets `partner-documents` and `sales-point-logos` are created by the one-shot `file-store-init` service (`seaweedfs/init.sh`); the app's identity may only read and write those two (`seaweedfs/s3.json`; nothing lists them), and the app only checks at startup that they exist.
 Temporal (dev server, gRPC on `7233`, UI at http://localhost:8233) keeps the workflows that resolve debits a card scheme didn't answer; its state lives in memory. Kafka (KRaft, one node; `kafka:9092` inside Docker, `localhost:9102` from the host) carries payment events on `payments.events`, with failed deliveries on `payments.events.DLT`.
 
+## Local accounts
+
+Every login the local stack creates. All passwords are `local-only` and public; never use them outside a laptop.
+
+| Account | Where | Login | Created by |
+|---|---|---|---|
+| Admin `aziz` (role `admin`) | the portal (http://localhost:5180/admin) and the API, realm `ecom` | `aziz` / `local-only` | `keycloak/ecom-realm.json`, imported when the Keycloak container starts (`start-dev --import-realm`) |
+| Admin `malika` (role `admin`) | the same | `malika` / `local-only` | the same; two admins exist so an activation can be approved by a second admin (four-eyes) |
+| Keycloak console | http://localhost:8180/admin, realm `master` | `admin` / `local-only` (`KEYCLOAK_ADMIN_PASSWORD`) | `KC_BOOTSTRAP_ADMIN_*` in `docker-compose.yml` |
+| Service client `ecom-backend` | used by the app to call Keycloak's admin API | client secret in Vault (`secret/ecom`) | `keycloak/ecom-realm.json`, `vault/seed.sh` |
+| Postgres owner | `localhost:5442`, database `acquiring` | `acquiring_admin` / `local-only` (`POSTGRES_PASSWORD`) | `docker-compose.yml` |
+| One user per module | the same database, its own schema only | `partner_user`, `commission_user`, `epos_user`, `bin_user`, `card_user`, `payment_user` / `local-only` | `postgres/init.sql` |
+| Read-only viewer (TablePlus) | every schema, no writes | `ecom_viewer` / `local-only` | `postgres/init.sql` |
+| Vault | http://localhost:8200 | token `local-only` | dev mode root token; `vault-seed` writes the app's secrets to `secret/ecom` |
+| File store (S3) | http://localhost:8333 | access key `ecom` / `local-only` | `seaweedfs/s3.json` |
+| Grafana | http://localhost:3030 | `admin` / `admin` | the `grafana/otel-lgtm` image's default |
+| Mailpit, Temporal UI, processing sandbox | http://localhost:8025, http://localhost:8233, http://localhost:8099 | no login | |
+
+Keycloak keeps its data inside its container. Recreating the container (`docker compose down`, or `up` after an image change) imports the realm again: `aziz` and `malika` come back with `local-only`, and every partner, merchant and API client created since is gone. Restarting the same container keeps them. To change an admin's password for good, change it in `keycloak/ecom-realm.json`.
+
 ## Where to look
 
 Each step of a process leaves its trace in one place:
