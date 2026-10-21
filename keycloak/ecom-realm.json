@@ -15,10 +15,49 @@
       {
         "name": "merchant",
         "description": "A merchant's server (API client): creates payments"
+      },
+      {
+        "name": "offline_access"
+      },
+      {
+        "name": "uma_authorization"
+      },
+      {
+        "name": "default-roles-ecom",
+        "description": "Every user and API client: offline access and the ecom-api audience",
+        "composite": true,
+        "composites": {
+          "realm": [
+            "offline_access",
+            "uma_authorization"
+          ],
+          "client": {
+            "ecom-api": [
+              "caller"
+            ]
+          }
+        }
       }
-    ]
+    ],
+    "client": {
+      "ecom-api": [
+        {
+          "name": "caller",
+          "description": "Puts ecom-api in the token's audience (Keycloak's audience resolve)"
+        }
+      ]
+    }
+  },
+  "defaultRole": {
+    "name": "default-roles-ecom"
   },
   "clients": [
+    {
+      "clientId": "ecom-api",
+      "name": "The ecom API, the audience every token names",
+      "enabled": true,
+      "bearerOnly": true
+    },
     {
       "clientId": "ecom-backend",
       "name": "ecom backend",
@@ -65,7 +104,8 @@
         }
       ],
       "realmRoles": [
-        "admin"
+        "admin",
+        "default-roles-ecom"
       ]
     },
     {
@@ -82,7 +122,8 @@
         }
       ],
       "realmRoles": [
-        "admin"
+        "admin",
+        "default-roles-ecom"
       ]
     },
     {

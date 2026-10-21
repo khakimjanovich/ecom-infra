@@ -6,7 +6,7 @@ Local infrastructure for [ecom](https://github.com/khakimjanovich/ecom).
 docker compose up -d
 ```
 
-Brings up Postgres (one schema and one user per module, e.g. `partner_user` sees only `partner`; `ecom_viewer` reads every schema and writes nothing), Redis, Mailpit (a local SMTP server; read the emails at http://localhost:8025) and Keycloak (http://localhost:8180, realm `ecom`: roles `admin`, `partner` and `merchant` (a merchant's server), admins `aziz` and `malika`, the `ecom-backend` service client and the `ecom-portal` login client; login pages in English, Russian and Uzbek through the `ecom` theme). Passwords here are for local use only.
+Brings up Postgres (one schema and one user per module, e.g. `partner_user` sees only `partner`; `ecom_viewer` reads every schema and writes nothing), Redis, Mailpit (a local SMTP server; read the emails at http://localhost:8025) and Keycloak (http://localhost:8180, realm `ecom`: roles `admin`, `partner` and `merchant` (a merchant's server), admins `aziz` and `malika`, the `ecom-backend` service client and the `ecom-portal` login client; every token, an API client's included, names the `ecom-api` audience (the default role grants `ecom-api`'s `caller` role, which Keycloak's audience resolve puts in `aud`), and the app accepts no other; login pages in English, Russian and Uzbek through the `ecom` theme). Passwords here are for local use only.
 A processing sandbox (WireMock, http://localhost:8099) stands in for Uzcard and Humo, with test cards for every outcome: see `processing-sandbox/README.md`.
 Vault (http://localhost:8200, token `local-only`, dev mode) keeps each API client's request-signing key under `secret/merchants/<client id>`. The bank puts keys there directly; the app only reads them:
 
