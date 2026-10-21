@@ -1,6 +1,6 @@
 # Alert rules, provisioned into Grafana's folder "ecom". What each means and what to do: README.md,
-# "Alerts". Datasources are the image's own: prometheus and loki. A "$$" is a "$": Grafana reads
-# "$name" in provisioning files as an environment variable.
+# "Alerts". Datasources are the image's own: prometheus and loki. Templates use ".Labels", never
+# "$labels": Grafana reads "$name" in provisioning files as an environment variable.
 apiVersion: 1
 groups:
   - orgId: 1
@@ -17,7 +17,7 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: "{{ $$labels.service_name }} answered a *_UNAVAILABLE problem in the last 5 minutes"
+          summary: "{{ .Labels.service_name }} answered a *_UNAVAILABLE problem in the last 5 minutes"
           description: "A dependency (the file store, Vault, Keycloak, ...) failed a request. See the Loki lines with the code; /actuator/health names the component."
         data:
           - refId: A
@@ -54,7 +54,7 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: "{{ $$labels.service_name }} could not call its card scheme in the last 5 minutes"
+          summary: "{{ .Labels.service_name }} could not call its card scheme in the last 5 minutes"
           description: "The adapter got a client error or no answer from Uzcard SV-Gate or Humo. Debits through it fail or stay UNKNOWN."
         data:
           - refId: A
@@ -91,7 +91,7 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: "{{ $$labels.service_name }}: more than 1% of requests failed with 5xx for 5 minutes"
+          summary: "{{ .Labels.service_name }}: more than 1% of requests failed with 5xx for 5 minutes"
           description: "Open the ecom - payments dashboard (server errors) and the error logs in Loki for the service."
         data:
           - refId: A
@@ -128,7 +128,7 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: "{{ $$labels.service_name }}: {{ $$labels.component }} is DOWN"
+          summary: "{{ .Labels.service_name }}: {{ .Labels.component }} is DOWN"
           description: "A health indicator reports DOWN. The component is named in the labels; /actuator/health shows the same."
         data:
           - refId: A
@@ -165,7 +165,7 @@ groups:
         labels:
           severity: critical
         annotations:
-          summary: "{{ $$labels.service_name }} sent no metrics for 2 minutes"
+          summary: "{{ .Labels.service_name }} sent no metrics for 2 minutes"
           description: "The service is down, stuck, or cannot reach the collector."
         data:
           - refId: A
