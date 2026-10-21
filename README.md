@@ -52,6 +52,23 @@ One payment, in order: it is created (Swagger or k6), its status is in `payment.
 
 The app and the adapters send their own telemetry over OTLP (Spring Boot with Micrometer and OpenTelemetry): traces to `OTLP_TRACES_ENDPOINT`, metrics to `OTLP_METRICS_ENDPOINT` and logs to `OTLP_LOGS_ENDPOINT` (default `localhost:4318`; the load stack and Kubernetes use `observability:4318`). Traces follow a request through HTTP in and out, the outbox, Kafka and Temporal; metrics are the JVM, HTTP, database pool and the app's own meters; every log line reaches Loki with its trace id, so a trace in Tempo links to its logs. Locally every trace is kept; production samples (`TRACING_SAMPLING`).
 
+## Alerts
+
+Grafana alert rules, the contact point and the notification policy are code in `observability/alerting/`, mounted into the `observability` container. Alerts arrive as email in Mailpit (http://localhost:8025); `ALERT_EMAILS` (default `oncall@ecom.local`, `;`-separated) is the recipient list, `ALERT_FROM` the sender. Rules and their state: Grafana → Alerting at http://localhost:3030 (admin / admin), folder `ecom`.
+
+| Alert | Fires when | What to do |
+|---|---|---|
+| Dependency unavailable | a log line with a `*_UNAVAILABLE` problem code in 5 minutes (Loki) | Find the code in Loki (`service_name`, the line starting `✗`). `FILE_STORE_STORAGE_UNAVAILABLE`: the file store is down or rejects our key; `KEYCLOAK_UNAVAILABLE`: Keycloak or its client secret; `VAULT`...: Vault or its token. Check the matching component in `/actuator/health` |
+| Card scheme adapter error | `UZCARD_ADAPTER_SV_GATE_CLIENT_ERROR` or `HUMO_ADAPTER_*_CLIENT_ERROR` in 5 minutes (Loki) | The adapter can't use Uzcard or Humo: check the scheme's URL and credentials, the sandbox locally. Debits through it fail or end UNKNOWN |
+| HTTP 5xx rate above 1% | more than 1% of a service's requests answered 5xx, for 5 minutes (Prometheus) | Open **ecom · payments** (server errors), then the error logs of that service in Loki |
+| Health DOWN | a health component reports DOWN for 1 minute (`ecom_health_up`) | The labels name the service and component (`fileStore`, `vault`, `vaultToken`, `keycloak`, `uzcardAdapter`, `humoAdapter`, ...); fix that dependency. The app stays out of `readiness` while a required one is down |
+| Service sends no metrics | `ecom`, `uzcard-adapter` or `humo-adapter` sent no metrics for 2 minutes | The service is down or can't reach `observability:4318`; start it, read its console. Fires locally too when an adapter isn't running |
+| Payments stuck | payments in `UNKNOWN` or `MANUAL_REVIEW` for 10 minutes (`ecom_payments_stuck`) | `UNKNOWN`: the resolution workflow in Temporal is still asking the scheme. `MANUAL_REVIEW`: it gave up; a person decides (payment admin API) |
+
+The health and stuck-payment alerts need the app and adapters that send `ecom_health_up` and `ecom_payments_stuck` (ecom PR "Health indicators"). Without them those alerts show no data and stay quiet.
+
+**After pulling ecom-infra, run `docker compose up -d --force-recreate`.** Changed mounts and environment only reach a container when it is recreated. Caveat: recreating `keycloak` re-imports the realm and drops users created since. To apply only an alerting change, recreate just Grafana's container: `docker compose up -d --no-deps observability` (its data, in memory, is lost).
+
 ## The system under load
 
 `load/docker-compose.yml` runs the app and the two adapters from their built jars, each limited like the target server: **1 CPU and 2 GB RAM** (the target also has a 256 GB SSD; Docker can't limit disk per container). The limits and JVM options live here, so load tests measure the code as it is. Start the main stack first, then `docker compose -f load/docker-compose.yml up -d`; the app answers on http://localhost:8085, which is where [ecom-k6-testing](https://github.com/khakimjanovich/ecom-k6-testing) points.

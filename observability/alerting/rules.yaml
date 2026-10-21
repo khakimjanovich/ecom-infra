@@ -1,0 +1,232 @@
+# Alert rules, provisioned into Grafana's folder "ecom". What each means and what to do: README.md,
+# "Alerts". Datasources are the image's own: prometheus and loki. A "$$" is a "$": Grafana reads
+# "$name" in provisioning files as an environment variable.
+apiVersion: 1
+groups:
+  - orgId: 1
+    name: ecom
+    folder: ecom
+    interval: 1m
+    rules:
+      - uid: ecom-dependency-unavailable
+        title: Dependency unavailable
+        condition: C
+        for: 0s
+        noDataState: OK
+        execErrState: Error
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $$labels.service_name }} answered a *_UNAVAILABLE problem in the last 5 minutes"
+          description: "A dependency (the file store, Vault, Keycloak, ...) failed a request. See the Loki lines with the code; /actuator/health names the component."
+        data:
+          - refId: A
+            relativeTimeRange: {from: 300, to: 0}
+            datasourceUid: loki
+            model:
+              refId: A
+              expr: 'sum by (service_name) (count_over_time({service_name=~"ecom|uzcard-adapter|humo-adapter"} |~ "✗ [0-9]+ [A-Z][A-Z0-9_]*_UNAVAILABLE " [5m]))'
+              instant: true
+              queryType: instant
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+              settings: {mode: dropNN}
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator: {type: gt, params: [0]}
+      - uid: ecom-scheme-adapter-error
+        title: Card scheme adapter error
+        condition: C
+        for: 0s
+        noDataState: OK
+        execErrState: Error
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $$labels.service_name }} could not call its card scheme in the last 5 minutes"
+          description: "The adapter got a client error or no answer from Uzcard SV-Gate or Humo. Debits through it fail or stay UNKNOWN."
+        data:
+          - refId: A
+            relativeTimeRange: {from: 300, to: 0}
+            datasourceUid: loki
+            model:
+              refId: A
+              expr: 'sum by (service_name) (count_over_time({service_name=~"ecom|uzcard-adapter|humo-adapter"} |~ "✗ [0-9]+ (UZCARD_ADAPTER_SV_GATE_CLIENT_ERROR|HUMO_ADAPTER_[A-Z_]+_CLIENT_ERROR) " [5m]))'
+              instant: true
+              queryType: instant
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+              settings: {mode: dropNN}
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator: {type: gt, params: [0]}
+      - uid: ecom-http-5xx
+        title: HTTP 5xx rate above 1%
+        condition: C
+        for: 5m
+        noDataState: OK
+        execErrState: Error
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $$labels.service_name }}: more than 1% of requests failed with 5xx for 5 minutes"
+          description: "Open the ecom - payments dashboard (server errors) and the error logs in Loki for the service."
+        data:
+          - refId: A
+            relativeTimeRange: {from: 300, to: 0}
+            datasourceUid: prometheus
+            model:
+              refId: A
+              expr: 'sum by (service_name) (rate(http_server_requests_milliseconds_count{status=~"5.."}[5m])) / sum by (service_name) (rate(http_server_requests_milliseconds_count[5m]))'
+              instant: true
+              queryType: instant
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+              settings: {mode: dropNN}
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator: {type: gt, params: [0.01]}
+      - uid: ecom-health-down
+        title: Health DOWN
+        condition: C
+        for: 1m
+        noDataState: OK
+        execErrState: Error
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $$labels.service_name }}: {{ $$labels.component }} is DOWN"
+          description: "A health indicator reports DOWN. The component is named in the labels; /actuator/health shows the same."
+        data:
+          - refId: A
+            relativeTimeRange: {from: 120, to: 0}
+            datasourceUid: prometheus
+            model:
+              refId: A
+              expr: 'max by (service_name, component) (last_over_time(ecom_health_up{service_name=~"ecom|uzcard-adapter|humo-adapter"}[2m]) == bool 0)'
+              instant: true
+              queryType: instant
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+              settings: {mode: dropNN}
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator: {type: gt, params: [0]}
+      - uid: ecom-service-silent
+        title: Service sends no metrics
+        condition: C
+        for: 0s
+        noDataState: OK
+        execErrState: Error
+        labels:
+          severity: critical
+        annotations:
+          summary: "{{ $$labels.service_name }} sent no metrics for 2 minutes"
+          description: "The service is down, stuck, or cannot reach the collector."
+        data:
+          - refId: A
+            relativeTimeRange: {from: 120, to: 0}
+            datasourceUid: prometheus
+            model:
+              refId: A
+              expr: 'absent_over_time(jvm_classes_loaded{service_name="ecom"}[2m]) or absent_over_time(jvm_classes_loaded{service_name="uzcard-adapter"}[2m]) or absent_over_time(jvm_classes_loaded{service_name="humo-adapter"}[2m])'
+              instant: true
+              queryType: instant
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+              settings: {mode: dropNN}
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator: {type: gt, params: [0]}
+      - uid: ecom-payments-stuck
+        title: Payments stuck
+        condition: C
+        for: 10m
+        noDataState: OK
+        execErrState: Error
+        labels:
+          severity: warning
+        annotations:
+          summary: "Payments are waiting in UNKNOWN or MANUAL_REVIEW"
+          description: "UNKNOWN: the scheme did not answer and the resolution workflow is checking. MANUAL_REVIEW: it gave up and a person decides."
+        data:
+          - refId: A
+            relativeTimeRange: {from: 900, to: 0}
+            datasourceUid: prometheus
+            model:
+              refId: A
+              expr: 'sum(max by (status) (ecom_payments_stuck))'
+              instant: true
+              queryType: instant
+              editorMode: code
+          - refId: B
+            datasourceUid: __expr__
+            model:
+              refId: B
+              type: reduce
+              expression: A
+              reducer: last
+              settings: {mode: dropNN}
+          - refId: C
+            datasourceUid: __expr__
+            model:
+              refId: C
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator: {type: gt, params: [0]}
