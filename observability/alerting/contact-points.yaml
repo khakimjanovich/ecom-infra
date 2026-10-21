@@ -1,0 +1,13 @@
+# Where alerts go: email to Mailpit (read at http://localhost:8025). ALERT_EMAILS (docker-compose.yml)
+# is the recipient list, ';'-separated; point it at a real address, or add a receiver here (Slack,
+# Telegram, a webhook), and the policy in policies.yaml sends to it.
+apiVersion: 1
+contactPoints:
+  - orgId: 1
+    name: ecom-email
+    receivers:
+      - uid: ecom-email
+        type: email
+        settings:
+          addresses: ${ALERT_EMAILS}
+          singleEmail: true
