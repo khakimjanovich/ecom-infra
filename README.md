@@ -15,7 +15,7 @@ docker compose exec -e VAULT_ADDR=http://127.0.0.1:8200 -e VAULT_TOKEN=local-onl
 ```
 
 Dev mode keeps everything in memory, so keys are gone after a restart.
-SeaweedFS (http://localhost:8333, S3 API, access key `ecom` / `local-only`) stores the app's files (merchants' documents, website logos), the way any S3 would in production.
+SeaweedFS (http://localhost:8333, S3 API, access key `ecom` / `local-only`) stores the app's files (merchants' documents, website logos), the way any S3 would in production. The buckets `partner-documents` and `sales-point-logos` are created by the one-shot `file-store-init` service (`seaweedfs/init.sh`); the app's identity may only read, write and list those two (`seaweedfs/s3.json`), and the app only checks at startup that they exist.
 Temporal (dev server, gRPC on `7233`, UI at http://localhost:8233) keeps the workflows that resolve debits a card scheme didn't answer; its state lives in memory. Kafka (KRaft, one node; `kafka:9092` inside Docker, `localhost:9102` from the host) carries payment events on `payments.events`, with failed deliveries on `payments.events.DLT`.
 
 ## Where to look

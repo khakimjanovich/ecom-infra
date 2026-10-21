@@ -78,6 +78,15 @@ services:
       - ./seaweedfs/s3.json:/etc/seaweedfs/s3.json:ro
       - file-store-data:/data
 
+  # One shot: the app's buckets (seaweedfs/init.sh). The app's identity may only read, write and list
+  # them (seaweedfs/s3.json); it creates nothing.
+  file-store-init:
+    image: chrislusf/seaweedfs:3.97
+    entrypoint: ["/bin/sh", "/init.sh"]
+    volumes: ["./seaweedfs/init.sh:/init.sh:ro"]
+    depends_on: [file-store]
+    restart: "no"
+
   # Temporal, for durable waits: resolving debits the scheme didn't answer. The dev server keeps
   # its state in memory; the UI is on http://localhost:8233.
   # Payment events (KRaft, one node). Containers use kafka:9092; the app on the host uses localhost:9102.
