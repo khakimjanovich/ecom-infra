@@ -1,5 +1,6 @@
-# The base on a laptop: the local images, smaller sizes, the local-only secrets, and the app on a
-# node port. Secrets here are the public local defaults; a real cluster gets ecom-secrets from Vault.
+# The base on a laptop: the local images, smaller sizes, the local Vault's token, and the app on a
+# node port. The token is the public local one; a real cluster signs in to Vault with AppRole or
+# Kubernetes auth.
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: ecom
@@ -10,16 +11,7 @@ secretGenerator:
   - name: ecom-secrets
     options: { disableNameSuffixHash: true }
     literals:
-      - PARTNER_DB_PASSWORD=local-only
-      - COMMISSION_DB_PASSWORD=local-only
-      - EPOS_DB_PASSWORD=local-only
-      - BIN_DB_PASSWORD=local-only
-      - CARD_DB_PASSWORD=local-only
-      - PAYMENT_DB_PASSWORD=local-only
-      - KEYCLOAK_CLIENT_SECRET=local-only
       - VAULT_TOKEN=local-only
-      - OTP_SECRET=local-only-otp-secret
-      - S3_SECRET_KEY=local-only
 configMapGenerator:
   - name: ecom-config
     behavior: merge

@@ -48,11 +48,13 @@ services:
       REDIS_PORT: "6379"
       MAIL_HOST: mailpit
       MAIL_PORT: "1025"
-      KEYCLOAK_URL: http://keycloak:8080
+      ECOM_KEYCLOAK_URL: http://keycloak:8080
       # Tokens name localhost:8180 as their issuer (KC_HOSTNAME); keys are fetched inside the network.
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://localhost:8180/realms/ecom
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/ecom/protocol/openid-connect/certs
       VAULT_URL: http://vault:8200
+      ECOM_SECRETS: vault://secret/ecom # the main stack's vault-seed put them there
+      VAULT_FAIL_FAST: "true"
       UZCARD_ADAPTER_URL: http://uzcard-adapter:8091
       HUMO_ADAPTER_URL: http://humo-adapter:8092
       S3_ENDPOINT: http://file-store:8333
