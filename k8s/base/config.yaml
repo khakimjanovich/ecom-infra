@@ -1,5 +1,5 @@
-# Where everything is. Secrets are not here: the app reads them from the ecom-secrets Secret, which
-# the bank creates in the cluster (from Vault in production) and which never lives in git.
+# Where everything is. Secrets are not here: the app reads them from Vault (secret/ecom, required:
+# startup fails if Vault can't be read), signing in with what the ecom-secrets Secret holds.
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,8 +10,10 @@ data:
   REDIS_PORT: "6379"
   MAIL_HOST: mailpit
   MAIL_PORT: "1025"
-  KEYCLOAK_URL: http://keycloak:8080
+  ECOM_KEYCLOAK_URL: http://keycloak:8080
   VAULT_URL: http://vault:8200
+  VAULT_IMPORT: vault://secret/ecom
+  VAULT_FAIL_FAST: "true"
   TEMPORAL_TARGET: temporal:7233
   KAFKA_BOOTSTRAP: kafka:9092
   LOGGING_STRUCTURED_FORMAT_CONSOLE: ecs # logs as ECS JSON, for machines

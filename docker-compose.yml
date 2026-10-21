@@ -69,6 +69,17 @@ services:
     cap_add: [IPC_LOCK]
     ports: ["8200:8200"] # http://localhost:8200, token local-only; merchants' signing keys under secret/merchants
 
+  # One shot: the app's local-only secrets into Vault at secret/ecom (vault/seed.sh), after every start.
+  vault-seed:
+    image: hashicorp/vault:1.20.4
+    entrypoint: ["/bin/sh", "/seed.sh"]
+    environment:
+      VAULT_ADDR: http://vault:8200
+      VAULT_TOKEN: local-only
+    volumes: ["./vault/seed.sh:/seed.sh:ro"]
+    depends_on: [vault]
+    restart: "no"
+
   file-store:
     image: chrislusf/seaweedfs:3.97
     # An S3-compatible store for the app's files; in production, any S3.
