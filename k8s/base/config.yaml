@@ -12,7 +12,7 @@ data:
   MAIL_PORT: "1025"
   ECOM_KEYCLOAK_URL: http://keycloak:8080
   VAULT_URL: http://vault:8200
-  ECOM_SECRETS: vault://secret/ecom
+  VAULT_IMPORT: vault://secret/ecom
   VAULT_FAIL_FAST: "true"
   TEMPORAL_TARGET: temporal:7233
   KAFKA_BOOTSTRAP: kafka:9092

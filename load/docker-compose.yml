@@ -53,7 +53,7 @@ services:
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://localhost:8180/realms/ecom
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/ecom/protocol/openid-connect/certs
       VAULT_URL: http://vault:8200
-      ECOM_SECRETS: vault://secret/ecom # the main stack's vault-seed put them there
+      VAULT_IMPORT: vault://secret/ecom # the main stack's vault-seed put them there
       VAULT_FAIL_FAST: "true"
       UZCARD_ADAPTER_URL: http://uzcard-adapter:8091
       HUMO_ADAPTER_URL: http://humo-adapter:8092
