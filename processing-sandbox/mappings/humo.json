@@ -73,7 +73,7 @@
         "transformers": [
           "response-template"
         ],
-        "fixedDelayMilliseconds": 40000
+        "fixedDelayMilliseconds": 65000
       }
     },
     {
@@ -224,6 +224,27 @@
             "contains": "GetPayment"
           },
           {
+            "contains": "<paymentRef>notfound-"
+          }
+        ]
+      },
+      "response": {
+        "status": 202,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        }
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "contains": "GetPayment"
+          },
+          {
             "contains": "<paymentRef>unknown-"
           }
         ]
@@ -350,6 +371,9 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$.params[?(@.primaryAccountNumber == '9860090101190073')]"
+          },
+          {
+            "matchesJsonPath": "$.params[?(@.mb_flag == 1)]"
           }
         ]
       },
@@ -368,7 +392,12 @@
       "priority": 5,
       "request": {
         "method": "POST",
-        "urlPath": "/humo-middleware/v3/iiacs/card"
+        "urlPath": "/humo-middleware/v3/iiacs/card",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$.params[?(@.mb_flag == 1)]"
+          }
+        ]
       },
       "response": {
         "status": 200,
