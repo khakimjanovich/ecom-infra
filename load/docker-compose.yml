@@ -35,9 +35,9 @@ services:
     environment:
       <<: *jvm
       DB_URL: jdbc:postgresql://postgres:5432/acquiring
-      # Each module has its own pool (ecom.db.<module>.hikari.*). Sized for this 1-CPU server and
-      # its traffic: payments and cards are on every payment's path, the rest serve the portal.
-      # Hikari's own sizing rule (cores x 2 + 1) per hot module; 25 connections in all.
+      # Each module has its own pool (ecom.db.<module>.hikari.*), sized for this 1-CPU server:
+      # payments and cards are on every payment's path, the rest serve the portal. 25 connections
+      # in all, well under Postgres's 100.
       ECOM_DB_PAYMENT_HIKARI_MAXIMUM_POOL_SIZE: "6"
       ECOM_DB_CARD_HIKARI_MAXIMUM_POOL_SIZE: "6"
       ECOM_DB_PARTNER_HIKARI_MAXIMUM_POOL_SIZE: "4"
