@@ -3,7 +3,16 @@
 # on every `docker compose up`). The app reads them through spring.config.import=vault://secret/ecom;
 # outside local, the bank writes real values to the same path. Every value here is public.
 set -e
-until vault status > /dev/null 2>&1; do sleep 1; done
+# Vault answers within seconds; after a minute something is wrong, and `docker compose up` says so.
+tries=0
+until vault status > /dev/null 2>&1; do
+  tries=$((tries + 1))
+  if [ "$tries" -ge 60 ]; then
+    echo "vault-seed: Vault at $VAULT_ADDR did not answer in 60 s" >&2
+    exit 1
+  fi
+  sleep 1
+done
 
 vault kv put secret/ecom \
   ecom.crypto.active-key-id=local1 \
