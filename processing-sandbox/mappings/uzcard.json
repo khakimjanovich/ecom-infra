@@ -8,6 +8,12 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'cards.new.otp')]"
+          },
+          {
+            "matchesJsonPath": "$.params.card.pan"
+          },
+          {
+            "matchesJsonPath": "$.params.card.expiry"
           }
         ]
       },
@@ -16,7 +22,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"{{jsonPath request.body '$.params.card.pan'}}\",\"phoneMask\":\"0101\",\"verified\":false}}",
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":1874{{substring (jsonPath request.body '$.params.card.pan') 8 16}},\"phoneMask\":\"*********0000\",\"token\":\"\",\"verified\":false}}",
         "transformers": [
           "response-template"
         ]
@@ -35,7 +41,13 @@
             "matchesJsonPath": "$.params.otp[?(@.code == '111111')]"
           },
           {
-            "matchesJsonPath": "$.params.otp[?(@.id == '8600140200000013')]"
+            "matchesJsonPath": "$.params.otp[?(@.id == '187400000013')]"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.id"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.code"
           }
         ]
       },
@@ -44,7 +56,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"uztok-{{jsonPath request.body '$.params.otp.id'}}\",\"username\":\"sandbox\",\"pan\":\"860014******0013\",\"status\":12,\"phone\":\"998900000101\",\"fullName\":\"TEST CARDHOLDER\",\"balance\":5000000,\"sms\":true,\"exceedLimit\":0}}",
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"uztok-86001402{{substring (jsonPath request.body '$.params.otp.id') 4 12}}\",\"username\":\"sandbox\",\"pan\":\"860014******0013\",\"status\":12,\"phone\":\"998900000101\",\"fullName\":\"TEST CARDHOLDER\",\"balance\":5000000,\"sms\":true,\"pincnt\":0,\"aacct\":\"010412**************00001\",\"par\":\"123422618D661F6A89A62518DF654\",\"cardtype\":\"private\",\"holdAmount\":0,\"cashbackAmount\":0,\"exceedLimit\":0}}",
         "transformers": [
           "response-template"
         ]
@@ -61,6 +73,12 @@
           },
           {
             "matchesJsonPath": "$.params.otp[?(@.code == '111111')]"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.id"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.code"
           }
         ]
       },
@@ -69,7 +87,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"uztok-{{jsonPath request.body '$.params.otp.id'}}\",\"username\":\"sandbox\",\"pan\":\"860014******7890\",\"status\":0,\"phone\":\"998900000101\",\"fullName\":\"TEST CARDHOLDER\",\"balance\":5000000,\"sms\":true,\"exceedLimit\":0}}",
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"uztok-86001402{{substring (jsonPath request.body '$.params.otp.id') 4 12}}\",\"username\":\"sandbox\",\"pan\":\"860014******7890\",\"status\":0,\"phone\":\"998900000101\",\"fullName\":\"TEST CARDHOLDER\",\"balance\":5000000,\"sms\":true,\"pincnt\":0,\"aacct\":\"010412**************00001\",\"par\":\"123422618D661F6A89A62518DF654\",\"cardtype\":\"private\",\"holdAmount\":0,\"cashbackAmount\":0,\"exceedLimit\":0}}",
         "transformers": [
           "response-template"
         ]
@@ -83,6 +101,12 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'cards.new.verify')]"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.id"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.code"
           }
         ]
       },
@@ -105,6 +129,9 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'cards.remove.token')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tokens[0]"
           }
         ]
       },
@@ -130,6 +157,33 @@
           },
           {
             "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000082')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -155,6 +209,33 @@
           },
           {
             "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000033')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -180,6 +261,33 @@
           },
           {
             "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000013')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -205,6 +313,33 @@
           },
           {
             "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000017')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -230,6 +365,33 @@
           },
           {
             "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000009')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -253,6 +415,33 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'trans.pay.purpose')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -275,6 +464,9 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'trans.reverse')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tranId"
           }
         ]
       },
@@ -297,6 +489,15 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'trans.reverse.partial')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.tranId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.reverseAmount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
           }
         ]
       },
@@ -322,6 +523,9 @@
           },
           {
             "matchesJsonPath": "$.params[?(@.extId =~ /never-.*/)]"
+          },
+          {
+            "matchesJsonPath": "$.params.extId"
           }
         ]
       },
@@ -347,6 +551,9 @@
           },
           {
             "matchesJsonPath": "$.params[?(@.extId =~ /reversed-.*/)]"
+          },
+          {
+            "matchesJsonPath": "$.params.extId"
           }
         ]
       },
@@ -369,6 +576,9 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'trans.ext')]"
+          },
+          {
+            "matchesJsonPath": "$.params.extId"
           }
         ]
       },
@@ -413,6 +623,21 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'terminal.add')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.name"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.type"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.purpose"
           }
         ]
       },
@@ -438,6 +663,21 @@
           },
           {
             "matchesJsonPath": "$.params.terminal[?(@.terminalId == '00000000')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.name"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.type"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.purpose"
           }
         ]
       },
@@ -463,6 +703,12 @@
           },
           {
             "matchesJsonPath": "$.params.terminal[?(@.terminalId == '00000000')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
           }
         ]
       },
@@ -485,6 +731,12 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'terminal.check')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
           }
         ]
       },
@@ -515,7 +767,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"Pid\":100001,\"TerminalId\":\"T0000001\",\"MerchantId\":\"90000001\",\"Username\":\"sandbox\",\"TerminalType\":1,\"InstId\":\"9013\",\"Name\":\"Sandbox e-POS\",\"Port\":0,\"Purpose\":\"payment\"}]}",
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"Pid\":100001,\"TerminalId\":\"T0000001\",\"MerchantId\":\"90000001\",\"Username\":\"sandbox\",\"TType\":8,\"TerminalType\":1,\"InstId\":\"9013\",\"Name\":\"Sandbox e-POS\",\"Port\":0,\"Purpose\":\"payment\"}]}",
         "transformers": [
           "response-template"
         ]
@@ -532,6 +784,12 @@
           },
           {
             "matchesJsonPath": "$.params.terminal[?(@.terminalId == '00000000')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
           }
         ]
       },
@@ -554,6 +812,12 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'terminal.remove')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
           }
         ]
       },
@@ -576,6 +840,12 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'report.sum')]"
+          },
+          {
+            "matchesJsonPath": "$.params.report.from"
+          },
+          {
+            "matchesJsonPath": "$.params.report.to"
           }
         ]
       },
@@ -598,6 +868,18 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'report.short')]"
+          },
+          {
+            "matchesJsonPath": "$.params.report.range.from"
+          },
+          {
+            "matchesJsonPath": "$.params.report.range.to"
+          },
+          {
+            "matchesJsonPath": "$.params.report.pageNumber"
+          },
+          {
+            "matchesJsonPath": "$.params.report.pageSize"
           }
         ]
       },
@@ -620,6 +902,18 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'report.detail')]"
+          },
+          {
+            "matchesJsonPath": "$.params.report.range.from"
+          },
+          {
+            "matchesJsonPath": "$.params.report.range.to"
+          },
+          {
+            "matchesJsonPath": "$.params.report.pageNumber"
+          },
+          {
+            "matchesJsonPath": "$.params.report.pageSize"
           }
         ]
       },
@@ -629,6 +923,1277 @@
           "Content-Type": "application/json"
         },
         "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"trans\":[{\"id\":\"{{randomValue length=10 type='NUMERIC'}}\",\"username\":\"sandbox\",\"refNum\":\"000000000101\",\"ext\":\"sandbox-1\",\"pan\":\"860014******7890\",\"tranType\":\"DEBIT\",\"date7\":\"{{now format='MMddHHmmss'}}\",\"date12\":\"{{now format='yyMMddHHmmss'}}\",\"amount\":100000,\"currency\":\"860\",\"stan\":\"{{randomValue length=6 type='NUMERIC'}}\",\"merchantId\":\"90000001\",\"terminalId\":\"T0000001\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"}]}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.get.tokens')]"
+          },
+          {
+            "matchesJsonPath": "$.params.id"
+          },
+          {
+            "matchesJsonPath": "$.params.cardId"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"3F319ED471BEEBBE\",\"appName\":\"somename1\",\"registrationDate\":\"10.01.2024 10:00:01\"},{\"id\":\"1D90FE531A06D44A\",\"appName\":\"somename2\",\"registrationDate\":\"18.03.2024 18:03:01\"},{\"id\":\"3D2F91B5B53C1884\",\"appName\":\"somename3\",\"registrationDate\":\"22.04.2024 12:01:01\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.block.tokens')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tokens[0].id"
+          },
+          {
+            "matchesJsonPath": "$.params.tokens[0].time"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"983F6F70F7574E1988661416D64509CE\",\"code\":0,\"message\":\"Token successfully blocked!\"},{\"id\":\"983F6F70F547891988661416D64512ED\",\"code\":0,\"message\":\"Token successfully blocked!\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.unblock.tokens')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tokens[0]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"983F6F70F7574E1988661416D64509CE\",\"code\":0,\"message\":\"Token successfully unblocked!\"},{\"id\":\"983F6F70F547891988661416D64512ED\",\"code\":0,\"message\":\"Token successfully unblocked!\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.get')]"
+          },
+          {
+            "matchesJsonPath": "$.params.ids[0]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"8F481DD8B5C6********************\",\"username\":\"somename\",\"pan\":\"8600************\",\"expiry\":\"1249\",\"status\":0,\"phone\":\"998998765432\",\"fullName\":\"Robert John Downey\",\"balance\":14900601000,\"sms\":true,\"pincnt\":0,\"aacct\":\"*************************\",\"par\":\"123422618D661F6A89A62518DF654\",\"cardtype\":\"private\",\"holdAmount\":-105000000,\"cashbackAmount\":0}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.get.cvv')]"
+          },
+          {
+            "matchesJsonPath": "$.params.cardId"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"code\":0,\"message\":\"The CVV has been sent to the phone number linked to the card!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.get.cvv2')]"
+          },
+          {
+            "matchesJsonPath": "$.params.cardId"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"cvv\":\"***\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.get.exceed')]"
+          },
+          {
+            "matchesJsonPath": "$.params.ids[0]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"8F481DD8B5C6********************\",\"username\":\"somename\",\"pan\":\"8600************\",\"expiry\":\"1249\",\"status\":0,\"phone\":\"998998765432\",\"fullName\":\"Robert John Downey\",\"balance\":14900601000,\"sms\":true,\"pincnt\":0,\"aacct\":\"*************************\",\"par\":\"123422618D661F6A89A62518DF654\",\"cardtype\":\"private\",\"holdAmount\":-105000000,\"cashbackAmount\":0,\"exceedLimit\":0}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.status.change')]"
+          },
+          {
+            "matchesJsonPath": "$.params.card.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.card.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.card.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.card.port"
+          },
+          {
+            "matchesJsonPath": "$.params.card.stan"
+          },
+          {
+            "matchesJsonPath": "$.params.card.statusId"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"1463497\",\"username\":\"somename\",\"refNum\":\"000000001463\",\"ext\":\"ext***\",\"pan\":\"8600************\",\"pan2\":\"\",\"expiry\":\"1249\",\"tranType\":\"CARDBLOCK\",\"date7\":\"0916152746\",\"date12\":\"190916152746\",\"amount\":0,\"currency\":860,\"stan\":123456,\"field38\":\"269476\",\"field48\":null,\"field91\":null,\"merchantId\":\"****\",\"terminalId\":\"******\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.pin.reset.otp')]"
+          },
+          {
+            "matchesJsonPath": "$.params.cardId"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"code\":0,\"message\":\"null\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.pin.reset.verify')]"
+          },
+          {
+            "matchesJsonPath": "$.params.card.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.card.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.card.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.card.port"
+          },
+          {
+            "matchesJsonPath": "$.params.card.stan"
+          },
+          {
+            "matchesJsonPath": "$.params.card.code"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"1463497\",\"username\":\"somename\",\"refNum\":\"000000001463\",\"ext\":\"ext***\",\"pan\":\"8600************\",\"pan2\":\"\",\"expiry\":\"1249\",\"tranType\":\"PIN_RESET\",\"date7\":\"0916152746\",\"date12\":\"190916152746\",\"amount\":0,\"currency\":860,\"stan\":123456,\"field38\":\"269476\",\"field48\":null,\"field91\":null,\"merchantId\":\"****\",\"terminalId\":\"******\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.list.token')]"
+          },
+          {
+            "matchesJsonPath": "$.params.phone"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"45709941B************1BB5E\",\"pan\":\"860012******2196\",\"mfo\":\"****\",\"fullName\":\"IVANOV IVAN\",\"contractId\":\"****\",\"instId\":\"****\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.check.pinfl')]"
+          },
+          {
+            "matchesJsonPath": "$.params.cardinfo.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.cardinfo.pinfl"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"code\":0,\"message\":\"Card belong to this PINFL!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.check.pinfl')]"
+          },
+          {
+            "matchesJsonPath": "$.params.cardinfo.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.cardinfo[?(@.pinfl == '00000000000000')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\": \"2.0\", \"id\": \"{{jsonPath request.body '$.id'}}\", \"error\": {\"code\": -392, \"message\": \"Сard does not belong to this PINFL!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'balance.get')]"
+          },
+          {
+            "matchesJsonPath": "$.params.ids[0]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"balanceInfo\":[{\"id\":\"8F481DD8************************\",\"pan\":\"8600**********66\",\"balance\":2749903000},{\"id\":\"861416E5************************\",\"pan\":\"8600**********00\",\"balance\":14770000000}],\"totalBalance\":17519903000}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.get.sdkid')]"
+          },
+          {
+            "matchesJsonPath": "$.params.card.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.card.phone"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"sdkId\":\"ccdf71cf-635f-44d0-bd25-83fdd0c7bb40\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'cards.set.transcheme')]"
+          },
+          {
+            "matchesJsonPath": "$.params.card.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.card.schemeId"
+          },
+          {
+            "matchesJsonPath": "$.params.card.duration"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"code\":0,\"message\":\"The scheme has been successfully installed on the card!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.sv')]"
+          },
+          {
+            "matchesJsonPath": "$.params.svId"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"1434555\",\"username\":\"somename\",\"refNum\":\"000000001434\",\"ext\":\"a******\",\"pan\":\"8600**********34\",\"pan2\":\"8600**********78\",\"expiry\":\"1249\",\"tranType\":\"P2P\",\"date7\":\"\",\"date12\":\"190415095533\",\"amount\":100000,\"currency\":860,\"stan\":123456,\"field38\":\"660096\",\"field48\":\"\",\"field91\":\"\",\"merchantId\":\"***********\",\"terminalId\":\"********\",\"resp\":0,\"respText\":null,\"respSV\":\"00\",\"status\":\"OK\"},{\"id\":\"1434556\",\"username\":\" somename \",\"refNum\":\"000000001434\",\"ext\":\"a******\",\"pan\":\"8600**********34\",\"pan2\":null,\"expiry\":\"2300\",\"tranType\":\"REVERSAL\",\"date7\":\"\",\"date12\":\"190415095534\",\"amount\":100000,\"currency\":860,\"stan\":123457,\"field38\":\"660097\",\"field48\":\"\",\"field91\":\"\",\"merchantId\":\"***********\",\"terminalId\":\"*******\",\"resp\":0,\"respText\":null,\"respSV\":\"00\",\"status\":\"ROK\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'curr.trans')]"
+          },
+          {
+            "matchesJsonPath": "$.params.pph"
+          },
+          {
+            "matchesJsonPath": "$.params.Pph"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"REF\":123456789,\"AMOUNT\":10000,\"MERCHANT\":\"**************\",\"TERMINAL\":\"********\",\"PAN\":\"626247***1234\",\"FIO\":\"Robert John Downey\",\"TRANS_TYPE\":700,\"UDATE\":20180830,\"SERVICE_ID\":\"\",\"REVERSAL\":1}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'p2p.universal')]"
+          },
+          {
+            "matchesJsonPath": "$.params.p2p.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.p2p.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.p2p.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.p2p.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.p2p.sender"
+          },
+          {
+            "matchesJsonPath": "$.params.p2p.recipient"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"1115188126\",\"username\":\"somename\",\"refNum\":\"012345678950\",\"ext\":\"**********\",\"pan\":\"860048******3006\",\"pan2\":\"860006******8562\",\"expiry\":\"2606\",\"tranType\":\"P2P\",\"transType\":689,\"date7\":\"1027213500\",\"date12\":\"211027213500\",\"amount\":2500000,\"currency\":\"860\",\"stan\":\"710199\",\"field38\":\"545252\",\"field48\":null,\"field91\":null,\"merchantId\":\"90******07\",\"terminalId\":\"92*****35\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\",\"refNumDebit\":\"127*******52\",\"refNumCredit\":\"127*******54\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'p2p.universal')]"
+          },
+          {
+            "matchesJsonPath": "$.params.p2p.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.p2p[?(@.recipient == 'notfound')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\": \"2.0\", \"id\": \"{{jsonPath request.body '$.id'}}\", \"error\": {\"code\": -200, \"message\": \"Card not found!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'p2p.universal.credit')]"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.recipient"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.sender.id"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.sender.legalName"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.sender.system"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.sender.lastName"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.sender.firstName"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.sender.middleName"
+          },
+          {
+            "matchesJsonPath": "$.params.credit.sender.refNum"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"12029\",\"username\":\"ipoteka\",\"refNum\":\"002569874830\",\"ext\":\" p2p_credit1\",\"pan\":\"860053******6906\",\"pan2\":\"\",\"expiry\":\"2604\",\"tranType\":\"P2PCREDIT\",\"transType\":785,\"date7\":\"0610013042\",\"date12\":\"210610013042\",\"amount\":110000,\"currency\":\"860\",\"stan\":\"414109\",\"field38\":\"826830\",\"field48\":null,\"field91\":null,\"merchantId\":\"9*********\",\"terminalId\":\"9********\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'p2p.info')]"
+          },
+          {
+            "matchesJsonPath": "$.params.hpan"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"CREF_NO\":\"8600**********66\",\"EMBOS_NAME\":\"Robert John Downey\",\"CARDTYPE\":\"private\",\"CARDSTATUS\":\"0\",\"CARDID\":\"F6F4834E64**********5681549A \",\"PINCNT\":0}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'p2p.info.additional')]"
+          },
+          {
+            "matchesJsonPath": "$.params.hpan"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"2F27B40C75404176F7D06D407A64D15C\",\"fullName\":\"ROBERT JOHN DOWNEY\",\"cardType\":\"private\",\"status\":\"0\",\"birthDate\":\"23041998\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'p2p.info.get.pinfl')]"
+          },
+          {
+            "matchesJsonPath": "$.params.utrnno"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"pinfl\":\"31712621360026\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'hold.create')]"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.time"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":1001,\"status\":0,\"description\":\"Successful!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'hold.create')]"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.hold[?(@.cardId == 'notfound')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\": \"2.0\", \"id\": \"{{jsonPath request.body '$.id'}}\", \"error\": {\"code\": -200, \"message\": \"Card not found! \"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'hold.dismiss')]"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.holdId"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.amount"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":1001,\"status\":0,\"description\":\"Successful!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'hold.dismiss.charge')]"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.holdId"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.port"
+          },
+          {
+            "matchesJsonPath": "$.params.hold.amount"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"1220\",\"username\":\"somename\",\"refNum\":\"000000291430\",\"ext\":\"123***\",\"pan\":\"8600***********\",\"pan2\":\"\",\"expiry\":\"2311\",\"tranType\":\"DEBIT\",\"date7\":\"0927172357\",\"date12\":\"190927173633\",\"amount\":10000,\"currency\":\"860\",\"stan\":\"012345\",\"field38\":\"291430\",\"field48\":null,\"field91\":null,\"merchantId\":\"********\",\"terminalId\":\"******\",\"resp\":0,\"respText\":\"Successful transaction\",\"respSV\":\"00\",\"status\":\"OK\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'hold.get.id')]"
+          },
+          {
+            "matchesJsonPath": "$.params.id"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"hid\":1981,\"crefNo\":\"8600************\",\"reqamt\":700000,\"createTime\":\"2019-11-07T16:20:11\",\"waitingTime\":\"2019-11-07T17:20:11\",\"status\":0,\"remark\":\"\",\"accNo\":\"\",\"userName\":\"somename\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'hold.get.cardId')]"
+          },
+          {
+            "matchesJsonPath": "$.params.cardId"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"hid\":1201,\"crefNo\":\"8600************\",\"reqamt\":5000000,\"createTime\":\"2019-03-12T09:33:46\",\"waitingTime\":\"2019-03-12T09:34:10\",\"status\":0,\"remark\":\"\",\"accNo\":\"\",\"userName\":\"somename\"},{\"hid\":1981,\"crefNo\":\"8600************\",\"reqamt\":700000,\"createTime\":\"2019-11-07T16:20:11\",\"waitingTime\":\"2019-11-07T17:20:11\",\"status\":0,\"remark\":\"\",\"accNo\":\"\",\"userName\":\"somename\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.history.filter')]"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.cardIds[0]"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.range.startDate"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.range.endDate"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.pageNumber"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.pageSize"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.isCredit"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"content\":[{\"utrnno\":3393000000,\"transType\":\"683\",\"hpan\":\"8600*********\",\"utime\":175941,\"udate\":20200310,\"bankDate\":null,\"reqamt\":1575,\"resp\":-1,\"reversal\":true,\"orgdev\":578549,\"merchant\":\"************\",\"terminal\":\"************\",\"merchantName\":\"somename\",\"street\":\"\",\"city\":\"\",\"isCredit\":false,\"credit\":false,\"mcc\":6010,\"currency\":860,\"actamt\":1575,\"acctbal\":100096451262}],\"last\":false,\"totalElements\":3,\"totalPages\":3,\"size\":1,\"number\":0,\"sort\":null,\"numberOfElements\":1,\"first\":true,\"totalDebit\":201575,\"totalCredit\":0}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.history')]"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.cardIds[0]"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.range.startDate"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.range.endDate"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.pageNumber"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.pageSize"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"content\":[{\"utrnno\":3393000000,\"transType\":\"683\",\"hpan\":\"8600*********\",\"utime\":175941,\"udate\":20200310,\"bankDate\":null,\"reqamt\":1575,\"resp\":-1,\"reversal\":true,\"orgdev\":578549,\"merchant\":\"************\",\"terminal\":\"************\",\"merchantName\":\"somename\",\"street\":\"\",\"city\":\"\",\"isCredit\":false,\"credit\":false,\"mcc\":6010,\"currency\":860,\"actamt\":1575,\"acctbal\":100096451262,\"conamt\":21147000}],\"last\":\"false\",\"totalElements\":10,\"totalPages\":10,\"size\":1,\"number\":1,\"sort\":null,\"numberOfElements\":1,\"first\":\"false\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'trans.history.extended')]"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.extId"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.startDate"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.endDate"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.pageNumber"
+          },
+          {
+            "matchesJsonPath": "$.params.criteria.pageSize"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"content\":[{\"utrnno\":\"010259874521\",\"transType\":\"508\",\"hpan\":\"860012******2196\",\"utime\":175941,\"udate\":20200310,\"reqamt\":1575,\"resp\":-1,\"reversal\":true,\"merchant\":\"90060002547\",\"terminal\":\"92301414\",\"merchantName\":\"SomeName\",\"street\":\"A.Qahhor 8\",\"city\":\"\",\"credit\":false,\"mcc\":6010,\"currency\":860,\"actamt\":1575,\"acctbal\":100096451262,\"oked\":\"04598\",\"inn\":\"98745621\"},{\"utrnno\":\"010260914789\",\"transType\":\"680\",\"hpan\":\"860012******2196\",\"utime\":134153,\"udate\":20200315,\"reqamt\":2500000,\"resp\":-1,\"reversal\":true,\"merchant\":\"90060002547\",\"terminal\":\"92301414\",\"merchantName\":\"SomeName\",\"street\":\"A.Qahhor 8\",\"city\":\"\",\"credit\":false,\"mcc\":6010,\"currency\":860,\"actamt\":2500000,\"acctbal\":100096426262,\"oked\":\"04598\",\"inn\":\"98745621\"}],\"last\":\"true\",\"totalElements\":2,\"totalPages\":1,\"size\":20,\"number\":0,\"numberOfElements\":2,\"first\":\"true\",\"extId\":\"ext123456789\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.limit.add')]"
+          },
+          {
+            "matchesJsonPath": "$.params.limitInfo.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.limitInfo.limits[0].limitId"
+          },
+          {
+            "matchesJsonPath": "$.params.limitInfo.limits[0].amount"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"limitId\":101,\"code\":0,\"message\":\"Limit added successfully!\"},{\"limitId\":102,\"code\":-320,\"message\":\"LimitId is already set for this card!\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.limit.info')]"
+          },
+          {
+            "matchesJsonPath": "$.params.cardId"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"limitId\":101,\"description\":\"Лимит уровня карты на общую сумму операций снятия наличных\",\"limitAmount\":10000000,\"usedAmount\":100000},{\"limitId\":102,\"description\":\"Лимит на выдачи наличных на сумму операций, цикл-месяц\",\"limitAmount\":20000000,\"usedAmount\":500000}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.limit.remove')]"
+          },
+          {
+            "matchesJsonPath": "$.params.limitInfo.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.limitInfo.limits[0]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"limitId\":102,\"code\":0,\"message\":\"Limit successfully removed!\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'card.limit.list')]"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"limitId\":23,\"name\":\"daily usage limit 683 transaction type\"},{\"limitId\":34,\"name\":\"daily limit for using p2p spending\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'autopay.cards.get')]"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.pinfl"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.owner"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.loanId"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.contractNumber"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.contractDateStart"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.contractDateEnd"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.creditType"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.creditSource"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.creditDestination"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.subscribe"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.terminalId"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"id\":\"994A8EB36BE94F854474793AB59AEA04\",\"pan\":\"860012******2196\",\"fullName\":\"NEKOV NEKBOY NORQULOVICH\",\"phone\":\"998*********\"},{\"id\":\"994A8CB36DF94F852147793AB59AEA04\",\"pan\":\"860014******8969\",\"fullName\":\"NEKOV NEKBOY NORQ\",\"phone\":\"998*********\"}]}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'autopay.cards.subscribe')]"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.subscribe"
+          },
+          {
+            "matchesJsonPath": "$.params.allinfo.toggle"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"code\":0,\"message\":\"Subscribe is disabled successfully!\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'online.pin.change')]"
+          },
+          {
+            "matchesJsonPath": "$.params.cardInfo.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.cardInfo.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.cardInfo.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.cardInfo.ext"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"ext\":\"bd2b6277b31245549a78fb5c620f3abe\",\"url\":\"https://webapi.uzcard.uz/pin/pinchange/anorbank?id=7a5aca71-b35b-4a84-877f-7fb6ae3e1639\"}}",
+        "transformers": [
+          "response-template"
+        ]
+      }
+    },
+    {
+      "priority": 5,
+      "request": {
+        "method": "POST",
+        "urlPath": "/uzcard/api/jsonrpc",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$[?(@.method == 'online.pin.set')]"
+          },
+          {
+            "matchesJsonPath": "$.params.cardInfo.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.cardInfo.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.cardInfo.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.cardInfo.ext"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"ext\":\"895157d9b78wa5c620a3bdc\",\"url\":\"https://webapi.uzcard.uz/pin/pinset/mkb?id=8b5ada71-b95b-4a14-357f-7fb6ae3e7852\"}}",
         "transformers": [
           "response-template"
         ]
