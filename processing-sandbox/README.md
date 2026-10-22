@@ -5,8 +5,8 @@ A WireMock stand-in for the Uzcard (its SV-Gate JSON-RPC API) and Humo (Payment 
 | Path | Speaks |
 |---|---|
 | `/uzcard/api/jsonrpc` | Uzcard JSON-RPC: every method of SV-Gate's guide (SVGATE.pdf, edition 1.0.27): `cards.*`, `card.*`, `balance.get`, `trans.*`, `curr.trans`, `p2p.*`, `report.*`, `hold.*`, `trans.history*`, `terminal.*`, `get.bin.list`, `card.limit.*`, `autopay.*`, `online.pin.*`. Answers are the guide's own examples (`terminal.get` in the real stand's PascalCase); a stub answers only when every required param is there, `terminal.add` included its `purpose`. `cards.get.tokens` and `curr.trans` need both spellings the guide uses (`id`+`cardId`, `pph`+`Pph`). The OTP id is `1874` + the PAN's last 8 digits. Errors: `card.check.pinfl` with PINFL `00000000000000` → -392; `p2p.universal` to `notfound` and `hold.create` on card `notfound` → -200 |
-| `/humo/PaymentServer` | SOAP `urn:PaymentServer`: `Payment` (SOAP_DMS hold, then confirm; SOAP_RECO reconciliation), `CancelRequest`, `ReturnPayment`, `GetPayment` |
-| `/humo-middleware/...` | `/v1/send/sms`, `/v1/send/code`, `/v3/iiacs/card`, `/v2/pm/bins` |
+| `/humo/PaymentServer` | SOAP `urn:PaymentServer`, every operation of HUMOPAYMENT.pdf: `Request` (P2P; SOAP_TOCARD_2 credit), `Payment` (SOAP_DMS hold, then confirm with the same or a changed amount; P2P confirm; SOAP_RECO reconciliation), `CancelRequest`, `ReturnPayment`, `GetPayment` |
+| `/humo-middleware/...` | every method of HUMOMIDDLEWARE.pdf (`/v2/mb/*`, `/v3/iiacs/card`, `/v3/iiacs/card2`, `/cs/v1/*`, `/v1/ws/transaction-history`, `/v2/pm/*`), plus `/v1/send/sms`, `/v1/send/code` |
 | `/merchant/webhooks` | a merchant's webhook endpoint: answers 200; WireMock's request journal (`/__admin/requests`) shows what arrived |
 
 ## Test cards
@@ -25,3 +25,5 @@ A WireMock stand-in for the Uzcard (its SV-Gate JSON-RPC API) and Humo (Payment 
 | 9860 0901 0119 0099 | 2804 | 660130 | no answer (timeout) |
 
 Any other SMS code is refused. Uzcard lookups (`trans.ext`) by an ext starting `never-` find nothing, by one starting `reversed-` find a debit given back; terminal `00000000` is one Uzcard doesn't have. Humo status lookups (`GetPayment`) by a paymentRef starting `active-` find a hold, by one starting `notfound-` find nothing (HTTP 202 with no body, as the real Payment Server answers), by one starting `unknown-` answer a SOAP fault; card record lookups (`/v3/iiacs/card`) answer only with `mb_flag` 1; card 9860 0901 0119 0073's card record is blocked (209). Each adapter's integration tests in ecom use a copy of its file.
+
+The Humo stubs answer in the shape of the PDFs' own examples (each names its section and page in `metadata.pdf`) and only when every field the PDF marks mandatory is there. A P2P confirmation is told from a SOAP_DMS one by a paymentRef starting `P2P`. A CancelRequest or ReturnPayment for a paymentRef starting `old-` is refused with 914 (too late, PS §7.1), as the Payment Server refuses: HTTP 500 with a `PaymentServerException{error, description}` body; `/v3/iiacs/card` without `mb_flag` answers without `mb`.
