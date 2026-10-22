@@ -599,13 +599,13 @@
             }
           },
           {
-            "matchesXPath": "//ps:Request/details[item[name='pan2']/value][item[name='expiry']/value][item[name='ccy_code']/value][item[name='amount']/value][item[name='merchant_id']/value][item[name='terminal_id']/value][item[name='sender_retrieval_ref_number']/value][item[name='sender_surname']/value][item[name='sender_pan']/value][item[name='sender_first_name']/value]",
+            "matchesXPath": "//ps:Request/details[item[name='pan2']/value][item[name='expiry']/value][item[name='ccy_code']/value][item[name='amount']/value][item[name='merchant_id']/value][item[name='terminal_id']/value][item[name='sender_surname']/value][item[name='sender_first_name']/value][substring(item[name='terminal_id']/value,3,2)!='66' or (item[name='sender_retrieval_ref_number']/value and item[name='sender_person_code']/value and item[name='sender_pan']/value)]",
             "xPathNamespaces": {
               "ps": "urn:PaymentServer"
             }
           },
           {
-            "matchesXPath": "//ps:Request[*[1][self::paymentRef]][*[2][self::billerRef]][*[3][self::payinstrRef]][*[last()-1][self::details]][*[last()][self::paymentOriginator]][not(sessionID) or *[4][self::sessionID]]",
+            "matchesXPath": "//ps:Request[*[1][self::paymentRef]][*[2][self::billerRef]][*[3][self::payinstrRef]][*[4][self::details]][*[5][self::paymentOriginator]][count(*)=5]",
             "xPathNamespaces": {
               "ps": "urn:PaymentServer"
             }
@@ -623,7 +623,7 @@
         ]
       },
       "metadata": {
-        "pdf": "HUMOPAYMENT.pdf §4 p.27-32, SOAP_TOCARD_2 (element order as the p.28 example; sessionID, when sent, after payinstrRef)"
+        "pdf": "HUMOPAYMENT.pdf §4 p.27-32, SOAP_TOCARD_2 (element order as the p.28 example, no sessionID; sender retrieval ref, PINFL and PAN only for reversal terminals xx66xxxx, as HUMO confirmed)"
       }
     },
     {
