@@ -352,13 +352,13 @@
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ebppif1=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><ebppif1:GetPaymentResponse><paymentID>3847996</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><status>finished</status><details><item><name>pan</name><value>9860090101191238</value></item><item><name>expiry</name><value>2901</value></item><item><name>ccy_code</name><value>860</value></item><item><name>amount</name><value>1000000</value></item><item><name>merchant_id</name><value>010950461213101</value></item><item><name>terminal_id</name><value>09610001</value></item><item><name>centre_id</name><value>AsiaAllianc</value></item><item><name>internal_pan_masked</name><value>986009******1238</value></item><item><name>netsw_proccode</name><value>000000</value></item><item><name>point_code</name><value>600440V00110</value></item><item><name>sli</name><value>210</value></item><item><name>cardholder_amount1a</name><value>1010000</value></item><item><name>cardholder_ccy_code</name><value>860</value></item><item><name>conversion_rate</name><value>1.000000000000000</value></item><item><name>fld_046_resp</name><value>70860D0001000000000001D00010000860</value></item><item><name>auth_action_code</name><value>000</value></item><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_appr_code</name><value>325476</value></item><item><name>auth_appr_code1a</name><value>325476</value></item><item><name>auth_ref_number</name><value>414906298880</value></item><item><name>auth_stan</name><value>298637</value></item><item><name>auth_stan1a</name><value>298468</value></item><item><name>auth_time</name><value>20240528105846</value></item><item><name>stip_client_id</name><value>00013902</value></item><item><name>card_type</name><value>01</value></item><item><name>merchant_name</name><value>OOO MULTI TRADE IMPEX&gt;ASNOBOD TUMANI UZ</value></item><item><name>acq_inst</name><value>009055</value></item><item><name>auth_row_numb1a</name><value>15298468</value></item><item><name>ret_ref_numb1a</name><value>414905298468</value></item><item><name>reconcile_info</name><value>202402290000000</value></item><item><name>amount1a</name><value>1010000</value></item><item><name>amount1a_original</name><value>1000000</value></item><item><name>iss_ref_data</name><value>00030251238010950461213101325476ROWN008152984680005011AsiaAllianc</value></item><item><name>transaction_amount</name><value>1010000</value></item><item><name>auth_row_numb1</name><value>15298637</value></item></details></ebppif1:GetPaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ebppif1=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><ebppif1:GetPaymentResponse><paymentID>3847996</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><status>finished</status><details><item><name>pan</name><value>9860090101191238</value></item><item><name>expiry</name><value>2901</value></item><item><name>ccy_code</name><value>860</value></item><item><name>amount</name><value>500000</value></item><item><name>merchant_id</name><value>010950461213101</value></item><item><name>terminal_id</name><value>09610001</value></item><item><name>centre_id</name><value>AsiaAllianc</value></item><item><name>internal_pan_masked</name><value>986009******1238</value></item><item><name>netsw_proccode</name><value>000000</value></item><item><name>point_code</name><value>600440V00110</value></item><item><name>sli</name><value>210</value></item><item><name>cardholder_amount1a</name><value>1010000</value></item><item><name>cardholder_ccy_code</name><value>860</value></item><item><name>conversion_rate</name><value>1.000000000000000</value></item><item><name>fld_046_resp</name><value>70860D0000500000000001D00005000860</value></item><item><name>auth_action_code</name><value>000</value></item><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_appr_code</name><value>363555</value></item><item><name>auth_appr_code1a</name><value>363555</value></item><item><name>auth_ref_number</name><value>414906298880</value></item><item><name>auth_stan</name><value>299026</value></item><item><name>auth_stan1a</name><value>298880</value></item><item><name>auth_time</name><value>20240528112125</value></item><item><name>stip_client_id</name><value>00013902</value></item><item><name>card_type</name><value>01</value></item><item><name>merchant_name</name><value>OOO MULTI TRADE IMPEX&gt;ASNOBOD TUMANI UZ</value></item><item><name>acq_inst</name><value>009055</value></item><item><name>auth_row_numb1a</name><value>15298880</value></item><item><name>ret_ref_numb1a</name><value>414906298880</value></item><item><name>reconcile_info</name><value>202402290000000</value></item><item><name>amount1a</name><value>1010000</value></item><item><name>amount1a_original</name><value>1000000</value></item><item><name>iss_ref_data</name><value>00030251238010950461213101363555ROWN008152988800005011AsiaAllianc</value></item><item><name>transaction_amount</name><value>505000</value></item><item><name>auth_action_code1pr</name><value>400</value></item><item><name>auth_row_numb1pr</name><value>15299024</value></item><item><name>auth_row_numb1</name><value>15299026</value></item></details></ebppif1:GetPaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
         "transformers": [
           "response-template"
         ]
       },
       "metadata": {
-        "pdf": "HUMOPAYMENT.pdf §5 p.36-39, GetPayment"
+        "pdf": "HUMOPAYMENT.pdf §5 p.36-39, GetPayment (the example answer verbatim)"
       }
     },
     {
@@ -464,10 +464,13 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "body": "{\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"listSize\":1,\"card\":{\"institutionId\":\"Trastbank\",\"primaryAccountNumber\":\"986009******1238\",\"effectiveDate\":\"2023-06-14T06:05:15Z\",\"updateDate\":\"2023-06-22T13:09:42Z\",\"prefixNumber\":2,\"expiry\":\"2804\",\"cardSequenceNumber\":1,\"cardholderId\":\"00008764\",\"nameOnCard\":\"TEST CARDHOLDER\",\"accountRestrictionsFlag\":\"E\",\"commissionGroup\":\"01001\",\"cardUserId\":\"00008764\",\"additionalInfo\":\"BRD00820000101IDN006104894CBS0011AGN0071038248\",\"riskGroup\":\"A\",\"riskGroup2\":\"A\",\"bankC\":\"09\",\"pinTryCount\":0,\"statuses\":{\"item\":[{\"type\":\"card\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\",\"effectiveDate\":\"2023-06-14T06:05:15Z\"},{\"type\":\"hot\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"},{\"type\":\"issuer\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\",\"effectiveDate\":\"2023-06-22T13:09:42Z\"},{\"type\":\"user\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"}]}},\"account\":[{\"institutionId\":\"Trastbank\",\"accountId\":\"35773\",\"bankAccountId\":\"0901095000024544\",\"currency\":\"860\",\"cardholderId\":\"00008764\",\"effectiveDate\":\"2023-06-22T11:26:22Z\",\"updateDate\":\"2023-06-22T11:31:00Z\",\"accountType\":\"DEFAULT\",\"initialAmount\":500000000,\"lockedBackofficeAmount\":0,\"lockTime\":\"2023-06-21T16:08:20Z\",\"shadowAmount\":0.0,\"priority\":1,\"status\":\"Active\",\"availableAmount\":500000000}],\"balance\":{\"currency\":\"860\",\"initialAmount\":500000000,\"bonusAmount\":0,\"creditLimit\":0,\"lockedBackofficeAmount\":0,\"lockedBackofficeAmountOffline\":0,\"lockedAmount\":0,\"availableAmount\":500000000},\"mb\":{\"state\":\"on\",\"phone\":\"+998900000101\",\"message\":\"Status of the customer mobile agreement is active\"}}}",
+        "body": "{\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"listSize\":1,\"card\":{\"institutionId\":\"Trastbank\",\"primaryAccountNumber\":\"986009******1238\",\"effectiveDate\":\"2023-06-14T06:05:15Z\",\"updateDate\":\"2023-06-22T13:09:42Z\",\"prefixNumber\":2,\"expiry\":\"2804\",\"cardSequenceNumber\":1,\"cardholderId\":\"00008764\",\"nameOnCard\":\"TEST CARDHOLDER\",\"accountRestrictionsFlag\":\"E\",\"commissionGroup\":\"01001\",\"cardUserId\":\"00008764\",\"additionalInfo\":\"BRD00820000101IDN006104894CBS0011AGN0071038248\",\"riskGroup\":\"A\",\"riskGroup2\":\"A\",\"bankC\":\"09\",\"pinTryCount\":0,\"statuses\":{\"item\":[{\"type\":\"card\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\",\"effectiveDate\":\"2023-06-14T06:05:15Z\"},{\"type\":\"hot\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"},{\"type\":\"issuer\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\",\"effectiveDate\":\"2023-06-22T13:09:42Z\"},{\"type\":\"user\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"}]},\"expiry2\":\"3004\",\"cardSequenceNumber2\":2,\"cardholderMessage\":\"HUMO\"},\"account\":[{\"institutionId\":\"Trastbank\",\"accountId\":\"35773\",\"bankAccountId\":\"0901095000024544\",\"currency\":\"860\",\"cardholderId\":\"00008764\",\"effectiveDate\":\"2023-06-22T11:26:22Z\",\"updateDate\":\"2023-06-22T11:31:00Z\",\"accountType\":\"DEFAULT\",\"initialAmount\":500000000,\"lockedBackofficeAmount\":0,\"lockTime\":\"2023-06-21T16:08:20Z\",\"shadowAmount\":0.0,\"priority\":1,\"status\":\"Active\",\"availableAmount\":500000000,\"amountSetTime\":\"2023-06-22T11:26:22Z\",\"bonusAmount\":0,\"bonusAmountExpiry\":\"2019-05-21T10:17:29Z\",\"creditLimit\":0,\"creditLimitExpiry\":\"2030-01-01T00:00:00Z\",\"lockedAmount\":0,\"commissionGroup\":\"01001\",\"timestamp\":\"2023-06-22T11:31:00.000\",\"additionalInfo\":\"\",\"exponent\":2}],\"balance\":{\"currency\":\"860\",\"initialAmount\":500000000,\"bonusAmount\":0,\"creditLimit\":0,\"lockedBackofficeAmount\":0,\"lockedBackofficeAmountOffline\":0,\"lockedAmount\":0,\"availableAmount\":500000000,\"exponent\":2},\"mb\":{\"state\":\"on\",\"phone\":\"+998900000101\",\"message\":\"Status of the customer mobile agreement is active\"}}}",
         "transformers": [
           "response-template"
         ]
+      },
+      "metadata": {
+        "pdf": "HUMOMIDDLEWARE.pdf §3.2.1 p.24-29, with mb_flag 1 (every CardRecord/AccountRecord field of p.21-23)"
       }
     },
     {
@@ -504,6 +507,12 @@
             "xPathNamespaces": {
               "ps": "urn:PaymentServer"
             }
+          },
+          {
+            "matchesXPath": "//ps:Request[*[1][self::language]][*[2][self::switchingID]][*[3][self::autoSwitch]][*[4][self::paymentRef]][*[5][self::details]][*[6][self::paymentOriginator]][count(*)=6]",
+            "xPathNamespaces": {
+              "ps": "urn:PaymentServer"
+            }
           }
         ]
       },
@@ -518,7 +527,7 @@
         ]
       },
       "metadata": {
-        "pdf": "HUMOPAYMENT.pdf §2.1 p.6-8, P2P authorization"
+        "pdf": "HUMOPAYMENT.pdf §2.1 p.6-8, P2P authorization (element order as the example)"
       }
     },
     {
@@ -540,13 +549,13 @@
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:wsa=\"http://schemas.xmlsoap.org/ws/2004/08/addressing\" xmlns:cs=\"urn:CardServices\" xmlns:ebppif1=\"urn:PaymentServer\" xmlns:el=\"urn:ExtListsServices\" xmlns:iiacs=\"urn:IIACardServices\" xmlns:lm=\"urn:Limits\"><SOAP-ENV:Body SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><ebppif1:PaymentResponse><paymentID>3847926</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>pan</name><value>9860090101191238</value></item><item><name>expiry</name><value>2901</value></item><item><name>pan2</name><value>9860090101823327</value></item><item><name>amount</name><value>2000000</value></item><item><name>ccy_code</name><value>860</value></item><item><name>merchant_id</name><value>010950000003007</value></item><item><name>terminal_id</name><value>09650002</value></item><item><name>internal_pan_masked</name><value>986009******1238</value></item><item><name>internal_pan2_masked</name><value>986009******3327</value></item><item><name>fld_126_P2PR</name><value>ID3847926PAN9860090101191238PAN29860090101823327</value></item><item><name>amount_fee</name><value>{{xPath request.body '//item[name=\"amount\"]/value/text()'}}</value></item><item><name>merchant_name</name><value>testt&gt;setset             UZ</value></item><item><name>point_code</name><value>600S10V00110</value></item><item><name>transaction_amount</name><value>2000000</value></item><item><name>cardholder_amount</name><value>2000000</value></item><item><name>cardholder_ccy_code</name><value>860</value></item><item><name>conversion_rate</name><value>1.000000000000000</value></item><item><name>auth_action_code</name><value>000</value></item><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_appr_code</name><value>287715</value></item><item><name>auth_ref_number</name><value>414904297729</value></item><item><name>auth_stan</name><value>297729</value></item><item><name>auth_time</name><value>20240528095722</value></item><item><name>stip_client_id</name><value>00013902</value></item><item><name>card_type</name><value>01</value></item><item><name>acq_inst</name><value>009055</value></item><item><name>auth_row_numb1</name><value>15297729</value></item><item><name>reconcile_info</name><value>2024052800000027</value></item><item><name>iss_ref_data</name><value>00030251238010950000003007287715ROWN008152977290005011AsiaAllianc</value></item><item><name>auth_msg_ref1</name><value/></item><item><name>auth_action_code2</name><value>000</value></item><item><name>auth_appr_code2</name><value>845755</value></item><item><name>auth_ref_number2</name><value>414904297730</value></item><item><name>auth_stan2</name><value>297730</value></item><item><name>auth_time2</name><value>20240528095722</value></item><item><name>card_type2</name><value>01</value></item><item><name>merchant_name2</name><value>testt&gt;setset           UZ</value></item><item><name>acq_inst2</name><value>009055</value></item><item><name>auth_row_numb3</name><value>15297730</value></item><item><name>reconcile_info2</name><value>2024052800000027</value></item><item><name>iss_ref_data2</name><value>000302512380109500000030072877150005011AsiaAlliancROWN00815297730</value></item><item><name>auth_msg_ref3</name><value/></item></details><action>10</action></ebppif1:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:SOAP-ENC=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:wsa=\"http://schemas.xmlsoap.org/ws/2004/08/addressing\" xmlns:cs=\"urn:CardServices\" xmlns:ebppif1=\"urn:PaymentServer\" xmlns:el=\"urn:ExtListsServices\" xmlns:iiacs=\"urn:IIACardServices\" xmlns:lm=\"urn:Limits\"><SOAP-ENV:Body SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><ebppif1:PaymentResponse><paymentID>3847926</paymentID><paymentRef>{{xPath request.body '//paymentRef/text()'}}</paymentRef><details><item><name>pan</name><value>9860090101191238</value></item><item><name>expiry</name><value>2901</value></item><item><name>pan2</name><value>9860090101823327</value></item><item><name>amount</name><value>2000000</value></item><item><name>ccy_code</name><value>860</value></item><item><name>merchant_id</name><value>010950000003007</value></item><item><name>terminal_id</name><value>09650002</value></item><item><name>internal_pan_masked</name><value>986009******1238</value></item><item><name>internal_pan2_masked</name><value>986009******3327</value></item><item><name>fld_126_P2PR</name><value>ID3847926PAN9860090101191238PAN29860090101823327</value></item><item><name>amount_fee</name><value>2000000</value></item><item><name>merchant_name</name><value>testt&gt;setset             UZ</value></item><item><name>point_code</name><value>600S10V00110</value></item><item><name>transaction_amount</name><value>2000000</value></item><item><name>cardholder_amount</name><value>2000000</value></item><item><name>cardholder_ccy_code</name><value>860</value></item><item><name>conversion_rate</name><value>1.000000000000000</value></item><item><name>auth_action_code</name><value>000</value></item><item><name>auth_action_code_final</name><value>000</value></item><item><name>auth_appr_code</name><value>287715</value></item><item><name>auth_ref_number</name><value>414904297729</value></item><item><name>auth_stan</name><value>297729</value></item><item><name>auth_time</name><value>20240528095722</value></item><item><name>stip_client_id</name><value>00013902</value></item><item><name>card_type</name><value>01</value></item><item><name>acq_inst</name><value>009055</value></item><item><name>auth_row_numb1</name><value>15297729</value></item><item><name>reconcile_info</name><value>2024052800000027</value></item><item><name>iss_ref_data</name><value>00030251238010950000003007287715ROWN008152977290005011AsiaAllianc</value></item><item><name>auth_msg_ref1</name><value/></item><item><name>auth_action_code2</name><value>000</value></item><item><name>auth_appr_code2</name><value>845755</value></item><item><name>auth_ref_number2</name><value>414904297730</value></item><item><name>auth_stan2</name><value>297730</value></item><item><name>auth_time2</name><value>20240528095722</value></item><item><name>card_type2</name><value>01</value></item><item><name>merchant_name2</name><value>testt&gt;setset           UZ</value></item><item><name>acq_inst2</name><value>009055</value></item><item><name>auth_row_numb3</name><value>15297730</value></item><item><name>reconcile_info2</name><value>2024052800000027</value></item><item><name>iss_ref_data2</name><value>000302512380109500000030072877150005011AsiaAlliancROWN00815297730</value></item><item><name>auth_msg_ref3</name><value/></item></details><action>10</action></ebppif1:PaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>",
         "transformers": [
           "response-template"
         ]
       },
       "metadata": {
-        "pdf": "HUMOPAYMENT.pdf §2.2 p.8-12, P2P confirmation (the sandbox knows a P2P payment by its P2P paymentRef)"
+        "pdf": "HUMOPAYMENT.pdf §2.2 p.8-12, P2P confirmation. Sandbox convention: the confirm request names nothing P2P, so a paymentRef starting P2P selects this answer; any other confirm gets the SOAP_DMS one"
       }
     },
     {
@@ -594,6 +603,12 @@
             "xPathNamespaces": {
               "ps": "urn:PaymentServer"
             }
+          },
+          {
+            "matchesXPath": "//ps:Request[*[1][self::paymentRef]][*[2][self::billerRef]][*[3][self::payinstrRef]][*[last()-1][self::details]][*[last()][self::paymentOriginator]][not(sessionID) or *[4][self::sessionID]]",
+            "xPathNamespaces": {
+              "ps": "urn:PaymentServer"
+            }
           }
         ]
       },
@@ -608,7 +623,7 @@
         ]
       },
       "metadata": {
-        "pdf": "HUMOPAYMENT.pdf §4 p.27-32, SOAP_TOCARD_2"
+        "pdf": "HUMOPAYMENT.pdf §4 p.27-32, SOAP_TOCARD_2 (element order as the p.28 example; sessionID, when sent, after payinstrRef)"
       }
     },
     {
@@ -1194,6 +1209,81 @@
       },
       "metadata": {
         "pdf": "HUMOMIDDLEWARE.pdf §3.5.2 p.52-53"
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "matchesXPath": "//ps:CancelRequest[starts-with(paymentRef,'old-')][paymentOriginator]",
+            "xPathNamespaces": {
+              "ps": "urn:PaymentServer"
+            }
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ebppif1=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><ebppif1:CancelRequestResponse><details><item><name>auth_action_code_final</name><value>914</value></item></details></ebppif1:CancelRequestResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>"
+      },
+      "metadata": {
+        "pdf": "HUMOPAYMENT.pdf §7.1 p.40, CancelRequest after 14 days: 914 (the text's answer; its exact shape is not in the PDF)"
+      }
+    },
+    {
+      "priority": 1,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo/PaymentServer",
+        "bodyPatterns": [
+          {
+            "matchesXPath": "//ps:ReturnPayment[starts-with(paymentRef,'old-')][paymentOriginator][item[name='merchant_id']/value][item[name='centre_id']/value][item[name='terminal_id']/value]",
+            "xPathNamespaces": {
+              "ps": "urn:PaymentServer"
+            }
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "text/xml; charset=utf-8"
+        },
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ebppif1=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><ebppif1:ReturnPaymentResponse><details><item><name>auth_action_code_final</name><value>914</value></item></details></ebppif1:ReturnPaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>"
+      },
+      "metadata": {
+        "pdf": "HUMOPAYMENT.pdf §7.2 p.41, ReturnPayment refused with 914 (sandbox convention, not in the PDF)"
+      }
+    },
+    {
+      "priority": 6,
+      "request": {
+        "method": "POST",
+        "urlPath": "/humo-middleware/v3/iiacs/card",
+        "bodyPatterns": [
+          {
+            "matchesJsonPath": "$.params.primaryAccountNumber"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": "{\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"listSize\":1,\"card\":{\"institutionId\":\"Trastbank\",\"primaryAccountNumber\":\"986009******1238\",\"effectiveDate\":\"2023-06-14T06:05:15Z\",\"updateDate\":\"2023-06-22T13:09:42Z\",\"prefixNumber\":2,\"expiry\":\"2804\",\"cardSequenceNumber\":1,\"cardholderId\":\"00008764\",\"nameOnCard\":\"TEST CARDHOLDER\",\"accountRestrictionsFlag\":\"E\",\"commissionGroup\":\"01001\",\"cardUserId\":\"00008764\",\"additionalInfo\":\"BRD00820000101IDN006104894CBS0011AGN0071038248\",\"riskGroup\":\"A\",\"riskGroup2\":\"A\",\"bankC\":\"09\",\"pinTryCount\":0,\"statuses\":{\"item\":[{\"type\":\"card\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\",\"effectiveDate\":\"2023-06-14T06:05:15Z\"},{\"type\":\"hot\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"},{\"type\":\"issuer\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\",\"effectiveDate\":\"2023-06-22T13:09:42Z\"},{\"type\":\"user\",\"actionCode\":\"000\",\"actionDescription\":\"Approved\"}]},\"expiry2\":\"3004\",\"cardSequenceNumber2\":2,\"cardholderMessage\":\"HUMO\"},\"account\":[{\"institutionId\":\"Trastbank\",\"accountId\":\"35773\",\"bankAccountId\":\"0901095000024544\",\"currency\":\"860\",\"cardholderId\":\"00008764\",\"effectiveDate\":\"2023-06-22T11:26:22Z\",\"updateDate\":\"2023-06-22T11:31:00Z\",\"accountType\":\"DEFAULT\",\"initialAmount\":500000000,\"lockedBackofficeAmount\":0,\"lockTime\":\"2023-06-21T16:08:20Z\",\"shadowAmount\":0.0,\"priority\":1,\"status\":\"Active\",\"availableAmount\":500000000,\"amountSetTime\":\"2023-06-22T11:26:22Z\",\"bonusAmount\":0,\"bonusAmountExpiry\":\"2019-05-21T10:17:29Z\",\"creditLimit\":0,\"creditLimitExpiry\":\"2030-01-01T00:00:00Z\",\"lockedAmount\":0,\"commissionGroup\":\"01001\",\"timestamp\":\"2023-06-22T11:31:00.000\",\"additionalInfo\":\"\",\"exponent\":2}],\"balance\":{\"currency\":\"860\",\"initialAmount\":500000000,\"bonusAmount\":0,\"creditLimit\":0,\"lockedBackofficeAmount\":0,\"lockedBackofficeAmountOffline\":0,\"lockedAmount\":0,\"availableAmount\":500000000,\"exponent\":2}}}",
+        "transformers": [
+          "response-template"
+        ]
+      },
+      "metadata": {
+        "pdf": "HUMOMIDDLEWARE.pdf §3.2.1 p.24-29, without mb_flag: no mobile banking status (p.25)"
       }
     }
   ]
