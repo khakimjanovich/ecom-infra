@@ -1226,14 +1226,14 @@
         ]
       },
       "response": {
-        "status": 200,
+        "status": 500,
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ebppif1=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><ebppif1:CancelRequestResponse><details><item><name>auth_action_code_final</name><value>914</value></item></details></ebppif1:CancelRequestResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>"
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ebppif1=\"urn:PaymentServer\"><SOAP-ENV:Body><ebppif1:PaymentServerException><error>914</error><description>Decline reason message: not able to trace back to original transaction</description></ebppif1:PaymentServerException></SOAP-ENV:Body></SOAP-ENV:Envelope>"
       },
       "metadata": {
-        "pdf": "HUMOPAYMENT.pdf §7.1 p.40, CancelRequest after 14 days: 914 (the text's answer; its exact shape is not in the PDF)"
+        "pdf": "HUMOPAYMENT.pdf §7 p.40-41, CancelRequest too late (914, §7.1 text). The refusal's shape is the Payment Server's PaymentServerException{error, description} with HTTP 500, as a production client reads it (not in the PDF)"
       }
     },
     {
@@ -1251,14 +1251,14 @@
         ]
       },
       "response": {
-        "status": 200,
+        "status": 500,
         "headers": {
           "Content-Type": "text/xml; charset=utf-8"
         },
-        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ebppif1=\"urn:PaymentServer\"><SOAP-ENV:Header/><SOAP-ENV:Body SOAP-ENV:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\"><ebppif1:ReturnPaymentResponse><details><item><name>auth_action_code_final</name><value>914</value></item></details></ebppif1:ReturnPaymentResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>"
+        "body": "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ebppif1=\"urn:PaymentServer\"><SOAP-ENV:Body><ebppif1:PaymentServerException><error>914</error><description>Decline reason message: not able to trace back to original transaction</description></ebppif1:PaymentServerException></SOAP-ENV:Body></SOAP-ENV:Envelope>"
       },
       "metadata": {
-        "pdf": "HUMOPAYMENT.pdf §7.2 p.41, ReturnPayment refused with 914 (sandbox convention, not in the PDF)"
+        "pdf": "HUMOPAYMENT.pdf §7 p.40-41, ReturnPayment too late (914, §7.1 text). The refusal's shape is the Payment Server's PaymentServerException{error, description} with HTTP 500, as a production client reads it (not in the PDF)"
       }
     },
     {
