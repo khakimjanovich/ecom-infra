@@ -8,6 +8,12 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'cards.new.otp')]"
+          },
+          {
+            "matchesJsonPath": "$.params.card.pan"
+          },
+          {
+            "matchesJsonPath": "$.params.card.expiry"
           }
         ]
       },
@@ -16,7 +22,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"{{jsonPath request.body '$.params.card.pan'}}\",\"phoneMask\":\"0101\",\"verified\":false}}",
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":1874{{substring (jsonPath request.body '$.params.card.pan') 8 16}},\"phoneMask\":\"*********0000\",\"token\":\"\",\"verified\":false}}",
         "transformers": [
           "response-template"
         ]
@@ -35,7 +41,13 @@
             "matchesJsonPath": "$.params.otp[?(@.code == '111111')]"
           },
           {
-            "matchesJsonPath": "$.params.otp[?(@.id == '8600140200000013')]"
+            "matchesJsonPath": "$.params.otp[?(@.id == '187400000013')]"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.id"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.code"
           }
         ]
       },
@@ -44,7 +56,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"uztok-{{jsonPath request.body '$.params.otp.id'}}\",\"username\":\"sandbox\",\"pan\":\"860014******0013\",\"status\":12,\"phone\":\"998900000101\",\"fullName\":\"TEST CARDHOLDER\",\"balance\":5000000,\"sms\":true,\"exceedLimit\":0}}",
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"uztok-86001402{{substring (jsonPath request.body '$.params.otp.id') 4 12}}\",\"username\":\"sandbox\",\"pan\":\"860014******0013\",\"status\":12,\"phone\":\"998900000101\",\"fullName\":\"TEST CARDHOLDER\",\"balance\":5000000,\"sms\":true,\"pincnt\":0,\"aacct\":\"010412**************00001\",\"par\":\"123422618D661F6A89A62518DF654\",\"cardtype\":\"private\",\"holdAmount\":0,\"cashbackAmount\":0,\"exceedLimit\":0}}",
         "transformers": [
           "response-template"
         ]
@@ -61,6 +73,12 @@
           },
           {
             "matchesJsonPath": "$.params.otp[?(@.code == '111111')]"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.id"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.code"
           }
         ]
       },
@@ -69,7 +87,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"uztok-{{jsonPath request.body '$.params.otp.id'}}\",\"username\":\"sandbox\",\"pan\":\"860014******7890\",\"status\":0,\"phone\":\"998900000101\",\"fullName\":\"TEST CARDHOLDER\",\"balance\":5000000,\"sms\":true,\"exceedLimit\":0}}",
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":{\"id\":\"uztok-86001402{{substring (jsonPath request.body '$.params.otp.id') 4 12}}\",\"username\":\"sandbox\",\"pan\":\"860014******7890\",\"status\":0,\"phone\":\"998900000101\",\"fullName\":\"TEST CARDHOLDER\",\"balance\":5000000,\"sms\":true,\"pincnt\":0,\"aacct\":\"010412**************00001\",\"par\":\"123422618D661F6A89A62518DF654\",\"cardtype\":\"private\",\"holdAmount\":0,\"cashbackAmount\":0,\"exceedLimit\":0}}",
         "transformers": [
           "response-template"
         ]
@@ -83,6 +101,12 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'cards.new.verify')]"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.id"
+          },
+          {
+            "matchesJsonPath": "$.params.otp.code"
           }
         ]
       },
@@ -105,6 +129,9 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'cards.remove.token')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tokens[0]"
           }
         ]
       },
@@ -130,6 +157,33 @@
           },
           {
             "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000082')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -155,6 +209,33 @@
           },
           {
             "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000033')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -180,6 +261,33 @@
           },
           {
             "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000013')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -205,6 +313,33 @@
           },
           {
             "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000017')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -230,6 +365,33 @@
           },
           {
             "matchesJsonPath": "$.params.tran[?(@.cardId == 'uztok-8600140200000009')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -253,6 +415,33 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'trans.pay.purpose')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.purpose"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.receiverId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.amount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.cardId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.commission"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.currency"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.terminalId"
           }
         ]
       },
@@ -275,6 +464,9 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'trans.reverse')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tranId"
           }
         ]
       },
@@ -297,6 +489,15 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'trans.reverse.partial')]"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.tranId"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.reverseAmount"
+          },
+          {
+            "matchesJsonPath": "$.params.tran.ext"
           }
         ]
       },
@@ -322,6 +523,9 @@
           },
           {
             "matchesJsonPath": "$.params[?(@.extId =~ /never-.*/)]"
+          },
+          {
+            "matchesJsonPath": "$.params.extId"
           }
         ]
       },
@@ -347,6 +551,9 @@
           },
           {
             "matchesJsonPath": "$.params[?(@.extId =~ /reversed-.*/)]"
+          },
+          {
+            "matchesJsonPath": "$.params.extId"
           }
         ]
       },
@@ -369,6 +576,9 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'trans.ext')]"
+          },
+          {
+            "matchesJsonPath": "$.params.extId"
           }
         ]
       },
@@ -413,6 +623,21 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'terminal.add')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.name"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.type"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.purpose"
           }
         ]
       },
@@ -438,6 +663,21 @@
           },
           {
             "matchesJsonPath": "$.params.terminal[?(@.terminalId == '00000000')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.name"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.type"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.purpose"
           }
         ]
       },
@@ -463,6 +703,12 @@
           },
           {
             "matchesJsonPath": "$.params.terminal[?(@.terminalId == '00000000')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
           }
         ]
       },
@@ -485,6 +731,12 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'terminal.check')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
           }
         ]
       },
@@ -515,7 +767,7 @@
         "headers": {
           "Content-Type": "application/json"
         },
-        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"Pid\":100001,\"TerminalId\":\"T0000001\",\"MerchantId\":\"90000001\",\"Username\":\"sandbox\",\"TerminalType\":1,\"InstId\":\"9013\",\"Name\":\"Sandbox e-POS\",\"Port\":0,\"Purpose\":\"payment\"}]}",
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":\"{{jsonPath request.body '$.id'}}\",\"result\":[{\"Pid\":100001,\"TerminalId\":\"T0000001\",\"MerchantId\":\"90000001\",\"Username\":\"sandbox\",\"TType\":8,\"TerminalType\":1,\"InstId\":\"9013\",\"Name\":\"Sandbox e-POS\",\"Port\":0,\"Purpose\":\"payment\"}]}",
         "transformers": [
           "response-template"
         ]
@@ -532,6 +784,12 @@
           },
           {
             "matchesJsonPath": "$.params.terminal[?(@.terminalId == '00000000')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
           }
         ]
       },
@@ -554,6 +812,12 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'terminal.remove')]"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.terminalId"
+          },
+          {
+            "matchesJsonPath": "$.params.terminal.merchantId"
           }
         ]
       },
@@ -576,6 +840,12 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'report.sum')]"
+          },
+          {
+            "matchesJsonPath": "$.params.report.from"
+          },
+          {
+            "matchesJsonPath": "$.params.report.to"
           }
         ]
       },
@@ -598,6 +868,18 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'report.short')]"
+          },
+          {
+            "matchesJsonPath": "$.params.report.range.from"
+          },
+          {
+            "matchesJsonPath": "$.params.report.range.to"
+          },
+          {
+            "matchesJsonPath": "$.params.report.pageNumber"
+          },
+          {
+            "matchesJsonPath": "$.params.report.pageSize"
           }
         ]
       },
@@ -620,6 +902,18 @@
         "bodyPatterns": [
           {
             "matchesJsonPath": "$[?(@.method == 'report.detail')]"
+          },
+          {
+            "matchesJsonPath": "$.params.report.range.from"
+          },
+          {
+            "matchesJsonPath": "$.params.report.range.to"
+          },
+          {
+            "matchesJsonPath": "$.params.report.pageNumber"
+          },
+          {
+            "matchesJsonPath": "$.params.report.pageSize"
           }
         ]
       },
@@ -645,6 +939,9 @@
           },
           {
             "matchesJsonPath": "$.params.id"
+          },
+          {
+            "matchesJsonPath": "$.params.cardId"
           }
         ]
       },
@@ -1118,6 +1415,9 @@
           },
           {
             "matchesJsonPath": "$.params.pph"
+          },
+          {
+            "matchesJsonPath": "$.params.Pph"
           }
         ]
       },
