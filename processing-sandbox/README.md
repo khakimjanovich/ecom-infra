@@ -4,7 +4,7 @@ A WireMock stand-in for the Uzcard (its SV-Gate JSON-RPC API) and Humo (Payment 
 
 | Path | Speaks |
 |---|---|
-| `/uzcard/api/jsonrpc` | Uzcard JSON-RPC: `cards.new.otp`, `cards.new.verify`, `cards.remove.token`, `trans.pay.purpose`, `trans.reverse`, `trans.reverse.partial`, `trans.ext`, `get.bin.list`, `terminal.add/check/get/remove`, `report.sum/short/detail` |
+| `/uzcard/api/jsonrpc` | Uzcard JSON-RPC: every method of SV-Gate's guide (SVGATE.pdf, edition 1.0.27): `cards.*`, `card.*`, `balance.get`, `trans.*`, `curr.trans`, `p2p.*`, `report.*`, `hold.*`, `trans.history*`, `terminal.*`, `get.bin.list`, `card.limit.*`, `autopay.*`, `online.pin.*`. Answers are the guide's own examples; a stub answers only when every required param is there. Errors: `card.check.pinfl` with PINFL `00000000000000` → -392; `p2p.universal` to `notfound` and `hold.create` on card `notfound` → -200 |
 | `/humo/PaymentServer` | SOAP `urn:PaymentServer`: `Payment` (SOAP_DMS hold, then confirm; SOAP_RECO reconciliation), `CancelRequest`, `ReturnPayment`, `GetPayment` |
 | `/humo-middleware/...` | `/v1/send/sms`, `/v1/send/code`, `/v3/iiacs/card`, `/v2/pm/bins` |
 | `/merchant/webhooks` | a merchant's webhook endpoint: answers 200; WireMock's request journal (`/__admin/requests`) shows what arrived |
